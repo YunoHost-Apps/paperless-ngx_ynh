@@ -1,5 +1,5 @@
 [Unit]
-Description=Small description of the service
+Description=Scan, index and archive all your physical documents
 After=network.target
 
 [Service]
@@ -7,7 +7,7 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/
-ExecStart=__FINALPATH__/script
+ExecStart=__FINALPATH__/venv/bin/python3 manage.py runserver
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 
