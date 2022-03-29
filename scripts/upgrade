@@ -18,10 +18,12 @@ app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
-language=$(ynh_app_setting_get --app=$app --key=language)
 admin=$(ynh_app_setting_get --app=$app --key=admin)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+db_user=$db_name
+datadir=$(ynh_app_setting_get --app=$app --key=datadir)
+paperless_secret_key=$(ynh_app_setting_get --app=app --key=paperless_secret_key)
 
 #=================================================
 # CHECK VERSION
@@ -81,26 +83,6 @@ ynh_script_progression --message="Ensuring downward compatibility..." --time --w
 #	ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 #fi
 
-### If nobody installed your app before 4.1,
-### then you may safely remove these lines
-
-# Cleaning legacy permissions
-if ynh_legacy_permissions_exists; then
-	ynh_legacy_permissions_delete_all
-
-	ynh_app_setting_delete --app=$app --key=is_public
-fi
-
-if ! ynh_permission_exists --permission="admin"; then
-	# Create the required permissions
-	ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin
-fi
-
-# Create a permission if needed
-if ! ynh_permission_exists --permission="api"; then
-	ynh_permission_create --permission="api" --url="/api" --allowed="visitors" --show_tile="false" --protected="true"
-fi
-
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
@@ -121,12 +103,6 @@ then
 	ynh_setup_source --dest_dir="$final_path"
 fi
 
-# FIXME: this should be managed by the core in the future
-# Here, as a packager, you may have to tweak the ownerhsip/permissions
-# such that the appropriate users (e.g. maybe www-data) can access
-# files in some cases.
-# But FOR THE LOVE OF GOD, do not allow r/x for "others" on the entire folder -
-# this will be treated as a security issue.
 chmod 750 "$final_path"
 chmod -R o-rwx "$final_path"
 chown -R $app:www-data "$final_path"
@@ -147,28 +123,23 @@ ynh_script_progression --message="Upgrading dependencies..." --time --weight=1
 ynh_install_app_dependencies $pkg_dependencies
 
 #=================================================
-# PHP-FPM CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading PHP-FPM configuration..." --time --weight=1
-
-# Create a dedicated PHP-FPM config
-ynh_add_fpm_config
-
-#=================================================
 # SPECIFIC UPGRADE
 #=================================================
-# ...
+# INSTALL PYTHON DEPENDENCIES
 #=================================================
+ynh_script_progression --message="Installing Python dependencies..."
+
+pushd $final_path
+	python3 -m venv venv
+	venv/bin/pip install --upgrade pip
+	venv/bin/pip install -r requirements.txt
+popd
 
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
 ynh_script_progression --message="Updating a configuration file..." --time --weight=1
 
-### Same as during install
-###
-### The file will automatically be backed-up if it's found to be manually modified (because
-### ynh_add_config keeps track of the file's checksum)
 
 ynh_add_config --template="some_config_file" --destination="$final_path/some_config_file"
 
@@ -184,6 +155,15 @@ chown $app:$app "$final_path/some_config_file"
 ###
 ### ynh_replace_string --match_string="match_string" --replace_string="replace_string" --target_file="$final_path/some_config_file"
 ### ynh_store_file_checksum --file="$final_path/some_config_file"
+
+#=================================================
+# SETUP THE DATABASE
+#=================================================
+ynh_script_progression --message="Setting up the database..." --time --weight=1
+
+pushd $final_path
+	ynh_exec_as $app python3 manage.py migrate
+popd
 
 #=================================================
 # SETUP SYSTEMD
@@ -208,7 +188,7 @@ ynh_use_logrotate --non-append
 #=================================================
 ynh_script_progression --message="Integrating service in YunoHost..." --time --weight=1
 
-yunohost service add $app --description="A short description of the app" --log="/var/log/$app/$app.log"
+yunohost service add $app --log="/var/log/$app/$app.log"
 
 #=================================================
 # START SYSTEMD SERVICE
