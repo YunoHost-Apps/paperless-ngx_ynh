@@ -9,14 +9,14 @@
     "version": "1.6~ynh1",
     "url": "https://paperless-ngx.com",
     "upstream": {
-        "license": "GPL-v3-or-later",
+        "license": "GPL-3.0-or-later",
         "website": "https://paperless-ngx.com",
         "demo": "https://demo.paperless-ngx.com/",
         "admindoc": "https://paperless-ngx.readthedocs.io/en/latest/index.html",
         "userdoc": "https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html",
         "code": "https://github.com/paperless-ngx/paperless-ngx"
     },
-    "license": "free",
+    "license": "GPL-3.0-or-later",
     "maintainer": {
         "name": "Tagada"
     },
