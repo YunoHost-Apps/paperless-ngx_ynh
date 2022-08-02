@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # Paperless-ngx for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://dash.yunohost.org/appci/app/paperless-ngx) ![](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://dash.yunohost.org/appci/app/paperless-ngx) ![Working status](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)  
 [![Install Paperless-ngx with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -38,7 +38,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 
 ## Screenshots
 
-![](./doc/screenshots/documents-wchrome-dark.png)
+![Screenshot of Paperless-ngx](./doc/screenshots/documents-wchrome-dark.png)
 
 ## Disclaimers / important information
 
@@ -47,22 +47,23 @@ Paperless-ngx is a document management system that transforms your physical docu
 
 ## Documentation and resources
 
-* Official app website: https://paperless-ngx.com
-* Official user documentation: https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html
-* Official admin documentation: https://paperless-ngx.readthedocs.io/en/latest/index.html
-* Upstream app code repository: https://github.com/paperless-ngx/paperless-ngx
-* YunoHost documentation for this app: https://yunohost.org/app_paperless-ngx
-* Report a bug: https://github.com/YunoHost-Apps/paperless-ngx_ynh/issues
+* Official app website: <https://paperless-ngx.com>
+* Official user documentation: <https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html>
+* Official admin documentation: <https://paperless-ngx.readthedocs.io/en/latest/index.html>
+* Upstream app code repository: <https://github.com/paperless-ngx/paperless-ngx>
+* YunoHost documentation for this app: <https://yunohost.org/app_paperless-ngx>
+* Report a bug: <https://github.com/YunoHost-Apps/paperless-ngx_ynh/issues>
 
 ## Developer info
 
 Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
-```
+
+``` bash
 sudo yunohost app install https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/testing --debug
 or
 sudo yunohost app upgrade paperless-ngx -u https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/testing --debug
 ```
 
-**More info regarding app packaging:** https://yunohost.org/packaging_apps
+**More info regarding app packaging:** <https://yunohost.org/packaging_apps>
