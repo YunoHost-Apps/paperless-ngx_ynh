@@ -36,7 +36,9 @@ if ynh_exec_warn_less yunohost service status $app >/dev/null
 then
 	ynh_script_progression --message="Removing $app service integration..." --weight=1
 	yunohost service remove "$app"
-	yunohost service remove "$app-qcluster"
+	yunohost service remove "$app-consumer"
+	yunohost service remove "$app-scheduler"
+	yunohost service remove "$app-task-queue"
 fi
 
 #=================================================
@@ -46,7 +48,9 @@ ynh_script_progression --message="Stopping and removing the systemd service..." 
 
 # Remove the dedicated systemd config
 ynh_remove_systemd_config --service="$app"
-ynh_remove_systemd_config --service="$app-cluster"
+ynh_remove_systemd_config --service="$app-consumer"
+ynh_remove_systemd_config --service="$app-scheduler"
+ynh_remove_systemd_config --service="$app-task-queue"
 
 #=================================================
 # REMOVE LOGROTATE CONFIGURATION

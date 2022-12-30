@@ -1,7 +1,5 @@
 [Unit]
-Description=Paperless qcluster
-After=network.target
-Wants=network.target
+Description=Paperless scheduler
 Requires=redis.service
 
 [Service]
@@ -9,8 +7,8 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/src/
-ExecStart=__FINALPATH__/venv/bin/python manage.py qcluster
-StandardOutput=append:/var/log/__APP__/__APP__.log
+ExecStart=__FINALPATH__/venv/bin/celery --app paperless beat --loglevel INFO
+StandardOutput=append:/var/log/__APP__/__APP__-scheduler.log
 StandardError=inherit
 
 # Sandboxing options to harden security

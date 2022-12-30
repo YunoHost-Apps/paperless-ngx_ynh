@@ -77,7 +77,9 @@ fi
 ynh_script_progression --message="Stopping a systemd service..." --weight=1
 
 ynh_systemd_action --service_name="$app" --action="stop" --log_path="/var/log/$app/$app.log"
-ynh_systemd_action --service_name="$app-qcluster" --action="stop" --log_path="/var/log/$app/$app-qcluster.log"
+ynh_systemd_action --service_name="$app-consumer" --action="stop" --log_path="/var/log/$app/$app-consumer.log"
+ynh_systemd_action --service_name="$app-scheduler" --action="stop" --log_path="/var/log/$app/$app-scheduler.log"
+ynh_systemd_action --service_name="$app-task-queue" --action="stop" --log_path="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
@@ -131,7 +133,9 @@ chown $app:$app "$final_path/paperless.conf"
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/$app.log"
-ynh_systemd_action --service_name="$app-qcluster" --action="start" --log_path="/var/log/$app/$app-qcluster.log"
+ynh_systemd_action --service_name="$app-consumer" --action="start" --log_path="/var/log/$app/$app-consumer.log"
+ynh_systemd_action --service_name="$app-scheduler" --action="start" --log_path="/var/log/$app/$app-scheduler.log"
+ynh_systemd_action --service_name="$app-task-queue" --action="start" --log_path="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # RELOAD NGINX

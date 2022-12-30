@@ -198,7 +198,9 @@ ynh_script_progression --message="Configuring a systemd service..." --weight=1
 
 # Create a dedicated systemd config
 ynh_add_systemd_config --service="$app" --template="systemd.service"
-ynh_add_systemd_config --service="$app-qcluster" --template="systemd-qcluster.service"
+ynh_add_systemd_config --service="$app-consumer" --template="systemd-consumer.service"
+ynh_add_systemd_config --service="$app-scheduler" --template="systemd-scheduler.service"
+ynh_add_systemd_config --service="$app-task-queue" --template="systemd-task-queue.service"
 
 #=================================================
 # GENERIC FINALIZATION
@@ -216,7 +218,9 @@ ynh_use_logrotate
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
 yunohost service add "$app" --log="/var/log/$app/$app.log"
-yunohost service add "$app-qcluster" --log="/var/log/$app/$app-qcluster.log"
+yunohost service add "$app-consumer" --log="/var/log/$app/$app-consumer.log"
+yunohost service add "$app-scheduler" --log="/var/log/$app/$app-scheduler.log"
+yunohost service add "$app-task-queue" --log="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -224,7 +228,9 @@ yunohost service add "$app-qcluster" --log="/var/log/$app/$app-qcluster.log"
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/$app.log"
-ynh_systemd_action --service_name="$app-qcluster" --action="start" --log_path="/var/log/$app/$app-qcluster.log"
+ynh_systemd_action --service_name="$app-consumer" --action="start" --log_path="/var/log/$app/$app-consumer.log"
+ynh_systemd_action --service_name="$app-scheduler" --action="start" --log_path="/var/log/$app/$app-scheduler.log"
+ynh_systemd_action --service_name="$app-task-queue" --action="start" --log_path="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # SETUP FAIL2BAN

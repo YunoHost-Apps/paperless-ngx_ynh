@@ -81,7 +81,9 @@ ynh_backup --src_path="/etc/logrotate.d/$app"
 #=================================================
 
 ynh_backup --src_path="/etc/systemd/system/$app.service"
-ynh_backup --src_path="/etc/systemd/system/$app-qcluster.service"
+ynh_backup --src_path="/etc/systemd/system/$app-consumer.service"
+ynh_backup --src_path="/etc/systemd/system/$app-scheduler.service"
+ynh_backup --src_path="/etc/systemd/system/$app-task-queue.service"
 
 #=================================================
 # BACKUP VARIOUS FILES

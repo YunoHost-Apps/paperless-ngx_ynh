@@ -161,9 +161,13 @@ ynh_psql_connect_as --user=$db_user --password=$db_pwd --database=$db_name < ./d
 ynh_script_progression --message="Restoring the systemd configuration..." --weight=1
 
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
-ynh_restore_file --origin_path="/etc/systemd/system/$app-qcluster.service"
+ynh_restore_file --origin_path="/etc/systemd/system/$app-consumer.service"
+ynh_restore_file --origin_path="/etc/systemd/system/$app-scheduler.service"
+ynh_restore_file --origin_path="/etc/systemd/system/$app-task-queue.service"
 systemctl enable "$app.service" --quiet
-systemctl enable "$app-qcluster.service" --quiet
+systemctl enable "$app-consumer.service" --quiet
+systemctl enable "$app-scheduler.service" --quiet
+systemctl enable "$app-task-queue.service" --quiet
 
 #=================================================
 # RESTORE THE LOGROTATE CONFIGURATION
@@ -181,7 +185,9 @@ ynh_restore_file --origin_path="/etc/logrotate.d/$app"
 ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
 
 yunohost service add "$app" --log="/var/log/$app/$app.log"
-yunohost service add "$app-qcluster" --log="/var/log/$app/$app-qcluster.log"
+yunohost service add "$app-consumer" --log="/var/log/$app/$app-consumer.log"
+yunohost service add "$app-scheduler" --log="/var/log/$app/$app-scheduler.log"
+yunohost service add "$app-task-queue" --log="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -189,7 +195,9 @@ yunohost service add "$app-qcluster" --log="/var/log/$app/$app-qcluster.log"
 ynh_script_progression --message="Starting a systemd service..." --weight=1
 
 ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/$app.log"
-ynh_systemd_action --service_name="$app-qcluster" --action="start" --log_path="/var/log/$app/$app-qcluster.log"
+ynh_systemd_action --service_name="$app-consumer" --action="start" --log_path="/var/log/$app/$app-consumer.log"
+ynh_systemd_action --service_name="$app-scheduler" --action="start" --log_path="/var/log/$app/$app-scheduler.log"
+ynh_systemd_action --service_name="$app-task-queue" --action="start" --log_path="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # GENERIC FINALIZATION
