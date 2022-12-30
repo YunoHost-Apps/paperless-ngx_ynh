@@ -6,7 +6,7 @@
         "en": "Scan, index and archive all your physical documents",
         "fr": "Scannez, triez et archivez tous vos documents papiers"
     },
-    "version": "1.6~ynh1",
+    "version": "1.9.2~ynh1",
     "url": "https://paperless-ngx.com",
     "upstream": {
         "license": "GPL-3.0-or-later",
@@ -21,7 +21,7 @@
         "name": "Tagada"
     },
     "requirements": {
-        "yunohost": ">= 4.3.0"
+        "yunohost": ">= 11.0.0"
     },
     "multi_instance": true,
     "services": [
@@ -38,6 +38,26 @@
             {
                 "name": "admin",
                 "type": "user"
+            },
+            {
+                "name": "admin_pw",
+                "type": "password",
+                "ask": {
+                    "en": "Please chose a password for admin user."
+                }
+            },
+            {
+                "name": "is_public",
+                "type": "boolean",
+                "default": false
+            },
+            {
+                "name": "is_public_api",
+                "type": "boolean",
+                "default": false,
+                "ask": {
+                    "en": "Should Paperless-ngx be accessible for apps."
+                }
             }
         ]
     }

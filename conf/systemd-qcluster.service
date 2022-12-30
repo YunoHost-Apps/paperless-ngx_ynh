@@ -1,5 +1,5 @@
 [Unit]
-Description=Paperless webserver
+Description=Paperless qcluster
 After=network.target
 Wants=network.target
 Requires=redis.service
@@ -9,7 +9,7 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/src/
-ExecStart=__FINALPATH__/venv/bin/uvicorn --port=__PORT__ --log-level=warning paperless.asgi:application
+ExecStart=__FINALPATH__/venv/bin/python manage.py qcluster
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 

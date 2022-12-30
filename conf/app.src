@@ -1,5 +1,5 @@
-SOURCE_URL=https://github.com/paperless-ngx/paperless-ngx/releases/download/ngx-1.6.0/paperless-ngx-1.6.0.tar.xz
-SOURCE_SUM=f4971abf258382fb171a8d11f4c6181ca03b42334deb6d9305a04ea8f8eab91e
+SOURCE_URL=https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.9.2/paperless-ngx-v1.9.2.tar.xz
+SOURCE_SUM=7da7e355745fcc5ac837323f22f7e6d556386297a61e41f04e104fe785e85cce
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=tar.gz
 SOURCE_IN_SUBDIR=true
