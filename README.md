@@ -15,39 +15,46 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 ## Overview
 
-Some long and extensive description of what the app is and does, lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Paperless-ngx is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, *less paper*.
 
 ### Features
 
-- Ut enim ad minim veniam, quis nostrud exercitation ullamco ;
-- Laboris nisi ut aliquip ex ea commodo consequat ;
-- Duis aute irure dolor in reprehenderit in voluptate ;
-- Velit esse cillum dolore eu fugiat nulla pariatur ;
-- Excepteur sint occaecat cupidatat non proident, sunt in culpa."
+* Organize and index your scanned documents with tags, correspondents, types, and more.
+* Performs OCR on your documents, adds selectable text to image only documents and adds tags, correspondents and document types to your documents.
+* Supports PDF documents, images, plain text files, and Office documents (Word, Excel, Powerpoint, and LibreOffice equivalents).
+* Paperless stores your documents plain on disk. Filenames and folders are managed by paperless and their format can be configured freely.
+* Single page application front end.
+* Full text search helps you find what you need.
+* Email processing: Paperless adds documents from your email accounts.
+* Machine learning powered document matching.
+* Optimized for multi core systems: Paperless-ngx consumes multiple documents in parallel.
+* The integrated sanity checker makes sure that your document archive is in good health.
+* [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
 
-**Shipped version:** 1.6~ynh1
+**Shipped version:** 1.11.0~ynh1
 
 **Demo:** https://demo.paperless-ngx.com/
 
 ## Screenshots
 
-![Screenshot of Paperless-ngx](./doc/screenshots/example.jpg)
+![Screenshot of Paperless-ngx](./doc/screenshots/documents-wchrome-dark.png)
 
 ## Disclaimers / important information
 
-* Any known limitations, constrains or stuff not working, such as (but not limited to):
-    * requiring a full dedicated domain ?
-    * architectures not supported ?
-    * not-working single-sign on or LDAP integration ?
-    * the app requires an important amount of RAM / disk / .. to install or to work properly
-    * etc...
+* This app require a dedicated domain.
+* There is no LDAP or SSO support.
 
-* Other infos that people should be aware of, such as:
-    * any specific step to perform after installing (such as manually finishing the install, specific admin credentials, ...)
-    * how to configure / administrate the application if it ain't obvious
-    * upgrade process / specificities / things to be aware of ?
-    * security considerations ?
+* Paperless is performing OCR on documents and images. English is installed by default. More languages can be installed:
+  * Display a list of all Tesseract language packs `apt-cache search tesseract-ocr`
+  * Install additional language packs
+    * Example for french `sudo apt-get install tesseract-ocr-fra`
+    * Example for german `sudo apt-get install tesseract-ocr-deu`
+  * Modify config to add new languages
+    * Open config-panel: https://my-domain.tld/yunohost/admin/#/apps/$app_id/config-panel
+    * You can combine multiple languages like this:
+      * One language: eng
+      * Two languages: eng+fra
 
 ## Documentation and resources
 

@@ -17,27 +17,29 @@ old_domain=$YNH_APP_OLD_DOMAIN
 old_path=$YNH_APP_OLD_PATH
 
 new_domain=$YNH_APP_NEW_DOMAIN
-new_path=$YNH_APP_NEW_PATH
+new_path="/"
 
 app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --time --weight=1
+ynh_script_progression --message="Loading installation settings..." --weight=1
 
 # Needed for helper "ynh_add_nginx_config"
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-
-# Add settings here as needed by your application
-#db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-#db_user=$db_name
-#db_pwd=$(ynh_app_setting_get --app=$app --key=db_pwd)
+datadir=$(ynh_app_setting_get --app=$app --key=datadir)
+port=$(ynh_app_setting_get --app=$app --key=port)
+db_name=$(ynh_app_setting_get --app=$app --key=db_name)
+db_user=$db_name
+db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
+redis_db=$(ynh_app_setting_get --app=$app --key=redis_db)
+paperless_secret_key=$(ynh_app_setting_get --app=$app --key=paperless_secret_key)
 
 #=================================================
 # BACKUP BEFORE CHANGE URL THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up the app before changing its URL (may take a while)..." --time --weight=1
+ynh_script_progression --message="Backing up the app before changing its URL (may take a while)..." --weight=1
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
@@ -72,14 +74,17 @@ fi
 #=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --time --weight=1
+ynh_script_progression --message="Stopping a systemd service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name="$app" --action="stop" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name="$app-consumer" --action="stop" --log_path="/var/log/$app/$app-consumer.log"
+ynh_systemd_action --service_name="$app-scheduler" --action="stop" --log_path="/var/log/$app/$app-scheduler.log"
+ynh_systemd_action --service_name="$app-task-queue" --action="stop" --log_path="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
 #=================================================
-ynh_script_progression --message="Updating NGINX web server configuration..." --time --weight=1
+ynh_script_progression --message="Updating NGINX web server configuration..." --weight=1
 
 nginx_conf_path=/etc/nginx/conf.d/$old_domain.d/$app.conf
 
@@ -108,22 +113,34 @@ fi
 #=================================================
 # SPECIFIC MODIFICATIONS
 #=================================================
-# ...
+# MODIFY A CONFIGURATION
 #=================================================
+ynh_script_progression --message="Modifying a configuration file..." --weight=1
+
+domain="$new_domain"
+path_url="$new_path"
+
+ynh_add_config --template="paperless.conf.example" --destination="$final_path/paperless.conf"
+
+chmod 400 "$final_path/paperless.conf"
+chown $app:$app "$final_path/paperless.conf"
 
 #=================================================
 # GENERIC FINALISATION
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --time --weight=1
+ynh_script_progression --message="Starting a systemd service..." --weight=1
 
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/$app.log"
+ynh_systemd_action --service_name="$app-consumer" --action="start" --log_path="/var/log/$app/$app-consumer.log"
+ynh_systemd_action --service_name="$app-scheduler" --action="start" --log_path="/var/log/$app/$app-scheduler.log"
+ynh_systemd_action --service_name="$app-task-queue" --action="start" --log_path="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --time --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -131,4 +148,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Change of URL completed for $app" --time --last
+ynh_script_progression --message="Change of URL completed for $app" --last

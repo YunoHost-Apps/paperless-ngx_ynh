@@ -1,12 +1,13 @@
-* Any known limitations, constrains or stuff not working, such as (but not limited to):
-    * requiring a full dedicated domain ?
-    * architectures not supported ?
-    * not-working single-sign on or LDAP integration ?
-    * the app requires an important amount of RAM / disk / .. to install or to work properly
-    * etc...
+* This app require a dedicated domain.
+* There is no LDAP or SSO support.
 
-* Other infos that people should be aware of, such as:
-    * any specific step to perform after installing (such as manually finishing the install, specific admin credentials, ...)
-    * how to configure / administrate the application if it ain't obvious
-    * upgrade process / specificities / things to be aware of ?
-    * security considerations ?
+* Paperless is performing OCR on documents and images. English is installed by default. More languages can be installed:
+  * Display a list of all Tesseract language packs `apt-cache search tesseract-ocr`
+  * Install additional language packs
+    * Example for french `sudo apt-get install tesseract-ocr-fra`
+    * Example for german `sudo apt-get install tesseract-ocr-deu`
+  * Modify config to add new languages
+    * Open config-panel: https://my-domain.tld/yunohost/admin/#/apps/$app_id/config-panel
+    * You can combine multiple languages like this:
+      * One language: eng
+      * Two languages: eng+fra
