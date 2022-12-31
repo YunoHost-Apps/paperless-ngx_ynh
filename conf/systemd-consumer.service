@@ -1,7 +1,5 @@
 [Unit]
-Description=Paperless webserver
-After=network.target
-Wants=network.target
+Description=Paperless consumer
 Requires=redis.service
 
 [Service]
@@ -9,15 +7,14 @@ Type=simple
 User=__APP__
 Group=__APP__
 WorkingDirectory=__FINALPATH__/src/
-ExecStart=__FINALPATH__/venv/bin/uvicorn --port=__PORT__ --log-level=warning paperless.asgi:application
-StandardOutput=append:/var/log/__APP__/__APP__.log
+ExecStart=__FINALPATH__/venv/bin/python3 manage.py document_consumer
+StandardOutput=append:/var/log/__APP__/__APP__-consumer.log
 StandardError=inherit
 
 # Sandboxing options to harden security
 # Details for these options: https://www.freedesktop.org/software/systemd/man/systemd.exec.html
 NoNewPrivileges=yes
-#PrivateTmp - Must be disabled for full functionality
-#PrivateTmp=yes
+PrivateTmp=yes
 PrivateDevices=yes
 RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
 RestrictNamespaces=yes
