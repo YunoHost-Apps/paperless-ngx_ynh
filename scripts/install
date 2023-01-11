@@ -159,6 +159,9 @@ ynh_app_setting_set --app=$app --key=redis_db --value=$redis_db
 paperless_secret_key=$(ynh_string_random)
 ynh_app_setting_set --app=$app --key=paperless_secret_key  --value=$paperless_secret_key
 
+ocr_language="eng"
+ynh_app_setting_set --app=$app --key=ocr_language  --value=$ocr_language
+
 ynh_add_config --template="paperless.conf.example" --destination="$final_path/paperless.conf"
 
 chmod 400 "$final_path/paperless.conf"

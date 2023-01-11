@@ -35,6 +35,7 @@ db_user=$db_name
 db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 redis_db=$(ynh_app_setting_get --app=$app --key=redis_db)
 paperless_secret_key=$(ynh_app_setting_get --app=$app --key=paperless_secret_key)
+ocr_language=$(ynh_app_setting_get --app=$app --key=ocr_language)
 
 #=================================================
 # BACKUP BEFORE CHANGE URL THEN ACTIVE TRAP

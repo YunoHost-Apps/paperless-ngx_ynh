@@ -28,6 +28,7 @@ db_user=$db_name
 db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 redis_db=$(ynh_app_setting_get --app=$app --key=redis_db)
 paperless_secret_key=$(ynh_app_setting_get --app=$app --key=paperless_secret_key)
+ocr_language=$(ynh_app_setting_get --app=$app --key=ocr_language)
 
 #=================================================
 # CHECK VERSION
@@ -65,43 +66,11 @@ ynh_systemd_action --service_name="$app-task-queue" --action="stop" --log_path="
 #=================================================
 ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
-#
-# N.B. : the followings setting migrations snippets are provided as *EXAMPLES*
-# of what you may want to do in some cases (e.g. a setting was not defined on
-# some legacy installs and you therefore want to initiaze stuff during upgrade)
-#
-
-# If db_name doesn't exist, create it
-#if [ -z "$db_name" ]; then
-#	db_name=$(ynh_sanitize_dbid --db_name=$app)
-#	ynh_app_setting_set --app=$app --key=db_name --value=$db_name
-#fi
-
-# If final_path doesn't exist, create it
-#if [ -z "$final_path" ]; then
-#	final_path=/var/www/$app
-#	ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-#fi
-
-### If nobody installed your app before 4.1,
-### then you may safely remove these lines
-
-# Cleaning legacy permissions
-#if ynh_legacy_permissions_exists; then
-#	ynh_legacy_permissions_delete_all
-#
-#	ynh_app_setting_delete --app=$app --key=is_public
-#fi
-#
-#if ! ynh_permission_exists --permission="admin"; then
-#	# Create the required permissions
-#	ynh_permission_create --permission="admin" --url="/admin" --allowed=$admin
-#fi
-#
-## Create a permission if needed
-#if ! ynh_permission_exists --permission="api"; then
-#	ynh_permission_create --permission="api" --url="/api" --allowed="visitors" --show_tile="false" --protected="true"
-#fi
+# If ocr_language doesn't exist, create it
+if [ -z "$ocr_language" ]; then
+	ocr_language="eng"
+	ynh_app_setting_set --app=$app --key=ocr_language --value=$ocr_language
+fi
 
 #=================================================
 # CREATE DEDICATED USER
