@@ -128,6 +128,14 @@ pushd $final_path
 	source "$final_path/venv/bin/activate"
 	ynh_exec_as $app $final_path/venv/bin/pip3 install --upgrade pip setuptools wheel
 	ynh_exec_as $app $final_path/venv/bin/pip3 install -r "$final_path/requirements.txt"
+
+	# Installing NLTK data
+	mkdir -p "$final_path/nltk_data"
+	chown -R "$app:" "$final_path/nltk_data"
+	ynh_exec_warn_less ynh_exec_as $app $final_path/venv/bin/python3 -m nltk.downloader -d "$final_path/nltk_data" snowball_data
+	ynh_exec_warn_less ynh_exec_as $app $final_path/venv/bin/python3 -m nltk.downloader -d "$final_path/nltk_data" stopwords
+	ynh_exec_warn_less ynh_exec_as $app $final_path/venv/bin/python3 -m nltk.downloader -d "$final_path/nltk_data" punkt
+
 	deactivate
 )
 popd
