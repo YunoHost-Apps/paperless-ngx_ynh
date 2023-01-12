@@ -38,6 +38,7 @@ db_user=$db_name
 db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
 datadir=$(ynh_app_setting_get --app=$app --key=datadir)
 paperless_secret_key=$(ynh_app_setting_get --app=$app --key=paperless_secret_key)
+ocr_language=$(ynh_app_setting_get --app=$app --key=ocr_language)
 
 redis_db=$(ynh_redis_get_free_db)
 ynh_app_setting_set --app=$app --key=redis_db --value=$redis_db
