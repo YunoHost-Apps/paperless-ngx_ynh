@@ -5,15 +5,15 @@ It shall NOT be edited by hand.
 
 # Paperless-ngx pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://dash.yunohost.org/appci/app/paperless-ngx) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://dash.yunohost.org/appci/app/paperless-ngx) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)  
 [![Installer Paperless-ngx avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 
 *[Read this readme in english.](./README.md)*
 
-> *Ce package vous permet d'installer Paperless-ngx rapidement et simplement sur un serveur YunoHost.
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+> *Ce package vous permet d’installer Paperless-ngx rapidement et simplement sur un serveur YunoHost.
+Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
-## Vue d'ensemble
+## Vue d’ensemble
 
 Paperless-ngx is a document management system that transforms your physical documents into a searchable online archive so you can keep, well, *less paper*.
 
@@ -36,9 +36,9 @@ Paperless-ngx is a document management system that transforms your physical docu
 
 **Démo :** https://demo.paperless-ngx.com/
 
-## Captures d'écran
+## Captures d’écran
 
-![Capture d'écran de Paperless-ngx](./doc/screenshots/documents-wchrome-dark.png)
+![Capture d’écran de Paperless-ngx](./doc/screenshots/documents-wchrome-dark.png)
 
 ## Avertissements / informations importantes
 
@@ -58,10 +58,10 @@ Paperless-ngx is a document management system that transforms your physical docu
 
 ## Documentations et ressources
 
-* Site officiel de l'app : <https://paperless-ngx.com>
+* Site officiel de l’app : <https://paperless-ngx.com>
 * Documentation officielle utilisateur : <https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html>
-* Documentation officielle de l'admin : <https://paperless-ngx.readthedocs.io/en/latest/index.html>
-* Dépôt de code officiel de l'app : <https://github.com/paperless-ngx/paperless-ngx>
+* Documentation officielle de l’admin : <https://paperless-ngx.readthedocs.io/en/latest/index.html>
+* Dépôt de code officiel de l’app : <https://github.com/paperless-ngx/paperless-ngx>
 * Documentation YunoHost pour cette app : <https://yunohost.org/app_paperless-ngx>
 * Signaler un bug : <https://github.com/YunoHost-Apps/paperless-ngx_ynh/issues>
 
@@ -77,4 +77,4 @@ ou
 sudo yunohost app upgrade paperless-ngx -u https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/testing --debug
 ```
 
-**Plus d'infos sur le packaging d'applications :** <https://yunohost.org/packaging_apps>
+**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
