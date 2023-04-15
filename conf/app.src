@@ -1,7 +1,7 @@
-SOURCE_URL=https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.11.3/paperless-ngx-v1.11.3.tar.xz
-SOURCE_SUM=c0636475cce057e50377d64ef815cc496a2da5eb44ffe73f8c90001fee925e9b
+SOURCE_URL=https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.13.0/paperless-ngx-v1.13.0.tar.xz
+SOURCE_SUM=f6544fdc300d349209385b429f8d38c76bdcde306771950604174f8f732f53ad
 SOURCE_SUM_PRG=sha256sum
-SOURCE_FORMAT=tar.gz
+SOURCE_FORMAT=tar.xz
 SOURCE_IN_SUBDIR=true
 SOURCE_FILENAME=
 SOURCE_EXTRACT=true

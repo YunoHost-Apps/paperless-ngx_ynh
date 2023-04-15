@@ -148,6 +148,12 @@ chmod 400 "$final_path/paperless.conf"
 chown $app:$app "$final_path/paperless.conf"
 
 #=================================================
+# REMOVE TEMP DIRECTORY
+#=================================================
+ynh_script_progression --message="Cleanup temp directory..." --weight=1
+ynh_secure_remove --file="/tmp/$app"
+
+#=================================================
 # SETUP THE DATABASE
 #=================================================
 ynh_script_progression --message="Setting up the database..." --weight=1

@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Paperless-ngx pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://dash.yunohost.org/appci/app/paperless-ngx) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://dash.yunohost.org/appci/app/paperless-ngx) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
+
 [![Installer Paperless-ngx avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 
 *[Read this readme in english.](./README.md)*
@@ -32,7 +33,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
 
-**Version incluse :** 1.11.3~ynh1
+**Version incluse :** 1.13.0~ynh1
 
 **Démo :** https://demo.paperless-ngx.com/
 
@@ -51,7 +52,7 @@ Paperless-ngx is a document management system that transforms your physical docu
     * Example for french `sudo apt-get install tesseract-ocr-fra`
     * Example for german `sudo apt-get install tesseract-ocr-deu`
   * Modify config to add new languages
-    * Open config-panel: https://my-domain.tld/yunohost/admin/#/apps/$app_id/config-panel
+    * Open the configuration tab under: https://my-domain.tld/yunohost/admin/#/apps/$app_id/
     * You can combine multiple languages like this:
       * One language: eng
       * Two languages: eng+fra
