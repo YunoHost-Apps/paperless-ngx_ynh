@@ -7,7 +7,7 @@
     * Example for french `sudo apt-get install tesseract-ocr-fra`
     * Example for german `sudo apt-get install tesseract-ocr-deu`
   * Modify config to add new languages
-    * Open config-panel: https://my-domain.tld/yunohost/admin/#/apps/$app_id/config-panel
+    * Open the configuration tab under: https://my-domain.tld/yunohost/admin/#/apps/$app_id/
     * You can combine multiple languages like this:
       * One language: eng
       * Two languages: eng+fra
