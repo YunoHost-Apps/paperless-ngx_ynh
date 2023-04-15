@@ -148,13 +148,10 @@ chmod 400 "$final_path/paperless.conf"
 chown $app:$app "$final_path/paperless.conf"
 
 #=================================================
-# ENSURE TEMP DIR OWNERSHIP
+# REMOVE TEMP DIRECTORY
 #=================================================
-ynh_script_progression --message="Updating temp directory ownership..." --weight=1
-mkdir -p "/tmp/$app"
-chmod 700 "/tmp/$app"
-chmod -R go-rwx "/tmp/$app"
-chown -R $app:$app "/tmp/$app"
+ynh_script_progression --message="Cleanup temp directory..." --weight=1
+ynh_secure_remove --file="/tmp/$app"
 
 #=================================================
 # SETUP THE DATABASE
