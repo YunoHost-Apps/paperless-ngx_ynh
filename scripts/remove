@@ -119,8 +119,8 @@ ynh_remove_app_dependencies
 #=================================================
 ynh_script_progression --message="Removing various files..." --weight=1
 
-# Remove a directory securely
-#ynh_secure_remove --file="/etc/$app"
+# Remove temp directory securely
+ynh_secure_remove --file="/tmp/$app"
 
 # Remove the log files
 ynh_secure_remove --file="/var/log/$app"

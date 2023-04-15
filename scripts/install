@@ -157,6 +157,15 @@ chmod -R o-rwx "$datadir"
 chown -R $app:www-data "$datadir"
 
 #=================================================
+# CREATE TEMP DIRECTORY
+#=================================================
+ynh_script_progression --message="Creating temp directory..." --weight=1
+mkdir -p "/tmp/$app"
+chmod 700 "/tmp/$app"
+chmod -R go-rwx "/tmp/$app"
+chown -R $app:$app "/tmp/$app"
+
+#=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1

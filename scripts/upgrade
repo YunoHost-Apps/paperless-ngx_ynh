@@ -148,6 +148,15 @@ chmod 400 "$final_path/paperless.conf"
 chown $app:$app "$final_path/paperless.conf"
 
 #=================================================
+# ENSURE TEMP DIR OWNERSHIP
+#=================================================
+ynh_script_progression --message="Updating temp directory ownership..." --weight=1
+mkdir -p "/tmp/$app"
+chmod 700 "/tmp/$app"
+chmod -R go-rwx "/tmp/$app"
+chown -R $app:$app "/tmp/$app"
+
+#=================================================
 # SETUP THE DATABASE
 #=================================================
 ynh_script_progression --message="Setting up the database..." --weight=1
