@@ -88,6 +88,12 @@ chmod -R o-rwx "$datadir"
 chown -R $app:$app "$datadir"
 
 #=================================================
+# REMOVE TEMP DIRECTORY
+#=================================================
+ynh_script_progression --message="Cleanup temp directory..." --weight=1
+ynh_secure_remove --file="/tmp/$app"
+
+#=================================================
 # ADD A CONFIGURATION
 #=================================================
 ynh_script_progression --message="Adding a configuration file..." --weight=1
