@@ -9,9 +9,6 @@
 # Since each app is different, maintainers can adapt its contents so as to perform
 # automatic actions when a new upstream release is detected.
 
-# Remove this exit command when you are ready to run this Action
-exit 1
-
 #=================================================
 # FETCHING LATEST RELEASE AND ITS ASSETS
 #=================================================
@@ -56,30 +53,8 @@ echo "${#assets[@]} available asset(s)"
 #=================================================
 
 # Here we use the $assets variable to get the resources published in the upstream release.
-# Here is an example for Grav, it has to be adapted in accordance with how the upstream releases look like.
 
-# Let's loop over the array of assets URLs
-for asset_url in ${assets[@]}; do
-
-echo "Handling asset at $asset_url"
-
-# Assign the asset to a source file in conf/ directory
-# Here we base the source file name upon a unique keyword in the assets url (admin vs. update)
-# Leave $src empty to ignore the asset
-case $asset_url in
-  *"admin"*)
-    src="app"
-    ;;
-  *"update"*)
-    src="app-upgrade"
-    ;;
-  *)
-    src=""
-    ;;
-esac
-
-# If $src is not empty, let's process the asset
-if [ ! -z "$src" ]; then
+echo "Handling asset at $assets"
 
 # Create the temporary directory
 tempdir="$(mktemp -d)"
@@ -108,13 +83,7 @@ SOURCE_FORMAT=$extension
 SOURCE_IN_SUBDIR=true
 SOURCE_FILENAME=
 EOT
-echo "... conf/$src.src updated"
-
-else
-echo "... asset ignored"
-fi
-
-done
+echo "... conf/app.src updated"
 
 #=================================================
 # SPECIFIC UPDATE STEPS
