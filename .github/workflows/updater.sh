@@ -60,8 +60,8 @@ echo "Handling asset at $assets"
 tempdir="$(mktemp -d)"
 
 # Download sources and calculate checksum
-filename=${asset_url##*/}
-curl --silent -4 -L $asset_url -o "$tempdir/$filename"
+filename=${assets##*/}
+curl --silent -4 -L $assets -o "$tempdir/$filename"
 checksum=$(sha256sum "$tempdir/$filename" | head -c 64)
 
 # Delete temporary directory
@@ -75,8 +75,8 @@ else
 fi
 
 # Rewrite source file
-cat <<EOT > conf/$src.src
-SOURCE_URL=$asset_url
+cat <<EOT > conf/app.src
+SOURCE_URL=$assets
 SOURCE_SUM=$checksum
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=$extension
