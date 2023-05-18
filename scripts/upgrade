@@ -38,6 +38,13 @@ if [ -z "$ocr_language" ]; then
 	ynh_app_setting_set --app=$app --key=ocr_language --value=$ocr_language
 fi
 
+if ynh_compare_current_package_version -c le -v "1.14.5~ynh1"
+then
+	# When upgrading from older version when install_dir was in /var/www,
+	# we need to rebuild the venv entierly
+	ynh_secure_remove --file="$install_dir/venv"
+fi
+
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
@@ -66,7 +73,7 @@ ynh_add_nginx_config
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
-#REMOVEME? ynh_script_progression --message="Installing Python dependencies..."
+ynh_script_progression --message="Installing Python dependencies..."
 
 pushd $install_dir
 	python3 -m venv venv
