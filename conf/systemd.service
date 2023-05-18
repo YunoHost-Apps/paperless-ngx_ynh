@@ -8,8 +8,8 @@ Requires=redis.service
 Type=simple
 User=__APP__
 Group=__APP__
-WorkingDirectory=__FINALPATH__/src/
-ExecStart=__FINALPATH__/venv/bin/uvicorn --port=__PORT__ --log-level=warning paperless.asgi:application
+WorkingDirectory=__INSTALL_DIR__/src/
+ExecStart=__INSTALL_DIR__/venv/bin/uvicorn --port=__PORT__ --log-level=warning paperless.asgi:application
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 
