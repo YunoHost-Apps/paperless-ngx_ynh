@@ -6,7 +6,7 @@
         "en": "Scan, index and archive all your physical documents",
         "fr": "Scannez, triez et archivez tous vos documents papiers"
     },
-    "version": "1.14.4~ynh1",
+    "version": "1.14.5~ynh1",
     "url": "https://paperless-ngx.com",
     "upstream": {
         "license": "GPL-3.0-or-later",
