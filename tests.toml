@@ -1,0 +1,27 @@
+test_format = 1.0
+
+[default]
+
+    # ------------
+    # Tests to run
+    # ------------
+
+    exclude = ["install.subdir"] 
+    
+    # -------------------------------
+    # Default args to use for install
+    # -------------------------------
+    
+    # By default, the CI will automagically fill the 'standard' args
+    # such as domain, path, admin, is_public and password with relevant values
+    # and also install args with a "default" provided in the manifest..
+    # It should only make sense to declare custom args here for args with no default values
+
+    args.admin_pw = "acab"
+
+    # -------------------------------
+    # Commits to test upgrade from
+    # -------------------------------
+
+    test_upgrade_from.8236072.name = "Upgrade from 1.14.5~ynh1 (v1)"
+

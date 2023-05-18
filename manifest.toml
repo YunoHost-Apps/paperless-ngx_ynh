@@ -47,7 +47,7 @@ ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requiremen
     default = false
 
     [install.is_public_api]
-    ask.en = "Should Paperless-ngx be accessible for apps."
+    ask.en = "Should Paperless-ngx API be accessible for apps."
     type = "boolean"
     default = false
 
