@@ -18,10 +18,10 @@ test_format = 1.0
     # It should only make sense to declare custom args here for args with no default values
 
     args.admin_pw = "acab"
+    args.init_main_permission = "all_users"
 
     # -------------------------------
     # Commits to test upgrade from
     # -------------------------------
 
     test_upgrade_from.8236072.name = "Upgrade from 1.14.5~ynh1 (v1)"
-

@@ -62,7 +62,7 @@ ynh_script_progression --message="Setting permissions for the data directory..."
 
 chmod 750 "$data_dir"
 chmod -R o-rwx "$data_dir"
-chown -R $app:www-data "$data_dir"
+chown -R $app:$app "$data_dir"
 
 #=================================================
 # ADD A CONFIGURATION
