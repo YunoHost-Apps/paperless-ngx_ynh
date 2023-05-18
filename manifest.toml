@@ -72,6 +72,7 @@ ram.runtime = "50M" # FIXME: replace with an **estimate** minimum ram requiremen
     [resources.system_user]
 
     [resources.install_dir]
+    dir = "/opt/yunohost/__APP__"
 
     [resources.data_dir]
     subdirs = ["consume", "data", "media"]
