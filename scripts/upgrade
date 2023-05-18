@@ -11,43 +11,9 @@ source ynh_redis
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-#REMOVEME? ynh_script_progression --message="Loading installation settings..." --weight=1
-
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
-#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
-#REMOVEME? path=$(ynh_app_setting_get --app=$app --key=path)
-#REMOVEME? port=$(ynh_app_setting_get --app=$app --key=port)
-#REMOVEME? admin=$(ynh_app_setting_get --app=$app --key=admin)
-#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
-#REMOVEME? data_dir=$(ynh_app_setting_get --app=$app --key=data_dir)
-#REMOVEME? db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-#REMOVEME? db_user=$db_name
-#REMOVEME? db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
-#REMOVEME? redis_db=$(ynh_app_setting_get --app=$app --key=redis_db)
-#REMOVEME? paperless_secret_key=$(ynh_app_setting_get --app=$app --key=paperless_secret_key)
-#REMOVEME? ocr_language=$(ynh_app_setting_get --app=$app --key=ocr_language)
-
-#=================================================
 # CHECK VERSION
 #=================================================
 upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-#REMOVEME? ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
-
-# Backup the current version of the app
-#REMOVEME? ynh_backup_before_upgrade
-#REMOVEME? ynh_clean_setup () {
-	# Restore it if the upgrade fails
-#REMOVEME? 	ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -73,14 +39,6 @@ if [ -z "$ocr_language" ]; then
 fi
 
 #=================================================
-# CREATE DEDICATED USER
-#=================================================
-#REMOVEME? ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
-
-# Create a dedicated user (if not existing)
-#REMOVEME? ynh_system_user_create --username=$app --home_dir="$install_dir"
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
@@ -94,13 +52,6 @@ fi
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
-
-#=================================================
-# UPGRADE DEPENDENCIES
-#=================================================
-#REMOVEME? ynh_script_progression --message="Upgrading dependencies..." --weight=1
-
-#REMOVEME? ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies $ocr_pkg_dependencies
 
 #=================================================
 # NGINX CONFIGURATION
@@ -126,7 +77,7 @@ pushd $install_dir
 	ynh_exec_as $app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
 
 	# Installing NLTK data
-#REMOVEME? 	ynh_secure_remove --file="$install_dir/nltk_data"
+	ynh_secure_remove --file="$install_dir/nltk_data"
 	mkdir -p "$install_dir/nltk_data"
 	chown -R "$app:" "$install_dir/nltk_data"
 	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
@@ -146,12 +97,6 @@ ynh_add_config --template="paperless.conf.example" --destination="$install_dir/p
 
 chmod 400 "$install_dir/paperless.conf"
 chown $app:$app "$install_dir/paperless.conf"
-
-#=================================================
-# REMOVE TEMP DIRECTORY
-#=================================================
-ynh_script_progression --message="Cleanup temp directory..." --weight=1
-ynh_secure_remove --file="/tmp/$app"
 
 #=================================================
 # SETUP THE DATABASE
@@ -217,13 +162,6 @@ ynh_systemd_action --service_name="$app-task-queue" --action="start" --log_path=
 
 # Create a dedicated Fail2Ban config
 #ynh_add_fail2ban_config --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-#REMOVEME? ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-#REMOVEME? ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
