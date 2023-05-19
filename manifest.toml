@@ -46,10 +46,9 @@ ram.runtime = "350M"
     type = "group"
     default = "all_users"
 
-    [install.is_public_api]
-    ask.en = "Should Paperless-ngx API be accessible for apps."
-    type = "boolean"
-    default = false
+    [install.init_api_permission]
+    type = "group"
+    default = "visitors"
 
 [resources]
     [resources.sources]
@@ -70,7 +69,12 @@ ram.runtime = "350M"
 
     [resources.permissions]
     main.url = "/"
+    main.auth_header = false
 
+    api.url = "/api"
+    api.show_tile = false
+    api.auth_header = false
+    
     [resources.ports]
     main.default = 8095
 
