@@ -47,6 +47,7 @@ ram.runtime = "350M"
     default = "all_users"
 
     [install.init_api_permission]
+    ask.en = "Paperless-ngx API access list"
     type = "group"
     default = "visitors"
 
