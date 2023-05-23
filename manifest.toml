@@ -72,7 +72,7 @@ ram.runtime = "350M"
     main.url = "/"
     main.auth_header = false
 
-    api.url = "/api"
+    api.url = "/api/"
     api.show_tile = false
     api.auth_header = false
     
