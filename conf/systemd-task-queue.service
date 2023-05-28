@@ -6,8 +6,8 @@ Requires=redis.service
 Type=simple
 User=__APP__
 Group=__APP__
-WorkingDirectory=__FINALPATH__/src/
-ExecStart=__FINALPATH__/venv/bin/celery --app paperless worker --loglevel INFO
+WorkingDirectory=__INSTALL_DIR__/src/
+ExecStart=__INSTALL_DIR__/venv/bin/celery --app paperless worker --loglevel INFO
 StandardOutput=append:/var/log/__APP__/__APP__-task-queue.log
 StandardError=inherit
 

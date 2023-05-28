@@ -11,43 +11,9 @@ source ynh_redis
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
-
-app=$YNH_APP_INSTANCE_NAME
-
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-port=$(ynh_app_setting_get --app=$app --key=port)
-admin=$(ynh_app_setting_get --app=$app --key=admin)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-datadir=$(ynh_app_setting_get --app=$app --key=datadir)
-db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-db_user=$db_name
-db_pwd=$(ynh_app_setting_get --app=$app --key=psqlpwd)
-redis_db=$(ynh_app_setting_get --app=$app --key=redis_db)
-paperless_secret_key=$(ynh_app_setting_get --app=$app --key=paperless_secret_key)
-ocr_language=$(ynh_app_setting_get --app=$app --key=ocr_language)
-
-#=================================================
 # CHECK VERSION
 #=================================================
 upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
-#=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
-
-# Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
-	# Restore it if the upgrade fails
-	ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
 
 #=================================================
 # STANDARD UPGRADE STEPS
@@ -72,13 +38,12 @@ if [ -z "$ocr_language" ]; then
 	ynh_app_setting_set --app=$app --key=ocr_language --value=$ocr_language
 fi
 
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --weight=1
-
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app --home_dir="$final_path"
+if ynh_compare_current_package_version -c le -v "1.14.5~ynh1"
+then
+	# When upgrading from older version when install_dir was in /var/www,
+	# we need to rebuild the venv entierly
+	ynh_secure_remove --file="$install_dir/venv"
+fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
@@ -88,19 +53,12 @@ if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
 	ynh_script_progression --message="Upgrading source files..." --weight=1
 
-	ynh_setup_source --dest_dir="$final_path" --keep="paperless.conf"
+	ynh_setup_source --dest_dir="$install_dir" --keep="paperless.conf"
 fi
 
-chmod 750 "$final_path"
-chmod -R o-rwx "$final_path"
-chown -R $app:$app "$final_path"
-
-#=================================================
-# UPGRADE DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Upgrading dependencies..." --weight=1
-
-ynh_exec_warn_less ynh_install_app_dependencies $pkg_dependencies $ocr_pkg_dependencies
+chmod 750 "$install_dir"
+chmod -R o-rwx "$install_dir"
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -117,21 +75,21 @@ ynh_add_nginx_config
 #=================================================
 ynh_script_progression --message="Installing Python dependencies..."
 
-pushd $final_path
+pushd $install_dir
 	python3 -m venv venv
-	chown -R "$app:" "$final_path"
+	chown -R "$app:" "$install_dir"
 (
-	source "$final_path/venv/bin/activate"
-	ynh_exec_as $app $final_path/venv/bin/pip3 install --upgrade pip setuptools wheel
-	ynh_exec_as $app $final_path/venv/bin/pip3 install -r "$final_path/requirements.txt"
+	source "$install_dir/venv/bin/activate"
+	ynh_exec_as $app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
+	ynh_exec_as $app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
 
 	# Installing NLTK data
-	ynh_secure_remove --file="$final_path/nltk_data"
-	mkdir -p "$final_path/nltk_data"
-	chown -R "$app:" "$final_path/nltk_data"
-	ynh_exec_warn_less ynh_exec_as $app $final_path/venv/bin/python3 -m nltk.downloader -d "$final_path/nltk_data" snowball_data
-	ynh_exec_warn_less ynh_exec_as $app $final_path/venv/bin/python3 -m nltk.downloader -d "$final_path/nltk_data" stopwords
-	ynh_exec_warn_less ynh_exec_as $app $final_path/venv/bin/python3 -m nltk.downloader -d "$final_path/nltk_data" punkt
+	ynh_secure_remove --file="$install_dir/nltk_data"
+	mkdir -p "$install_dir/nltk_data"
+	chown -R "$app:" "$install_dir/nltk_data"
+	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
+	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" stopwords
+	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt
 
 	deactivate
 )
@@ -142,26 +100,20 @@ popd
 #=================================================
 ynh_script_progression --message="Updating a configuration file..." --weight=1
 
-ynh_add_config --template="paperless.conf.example" --destination="$final_path/paperless.conf"
+ynh_add_config --template="paperless.conf.example" --destination="$install_dir/paperless.conf"
 
-chmod 400 "$final_path/paperless.conf"
-chown $app:$app "$final_path/paperless.conf"
-
-#=================================================
-# REMOVE TEMP DIRECTORY
-#=================================================
-ynh_script_progression --message="Cleanup temp directory..." --weight=1
-ynh_secure_remove --file="/tmp/$app"
+chmod 400 "$install_dir/paperless.conf"
+chown $app:$app "$install_dir/paperless.conf"
 
 #=================================================
 # SETUP THE DATABASE
 #=================================================
 ynh_script_progression --message="Setting up the database..." --weight=1
 
-pushd "$final_path/src"
+pushd "$install_dir/src"
 (
-	source "$final_path/venv/bin/activate"
-	ynh_exec_as $app $final_path/venv/bin/python manage.py migrate
+	source "$install_dir/venv/bin/activate"
+	ynh_exec_as $app $install_dir/venv/bin/python manage.py migrate
 	deactivate
 )
 popd
@@ -217,13 +169,6 @@ ynh_systemd_action --service_name="$app-task-queue" --action="start" --log_path=
 
 # Create a dedicated Fail2Ban config
 #ynh_add_fail2ban_config --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-ynh_systemd_action --service_name=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
