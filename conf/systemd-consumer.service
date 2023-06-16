@@ -6,8 +6,8 @@ Requires=redis.service
 Type=simple
 User=__APP__
 Group=__APP__
-WorkingDirectory=__FINALPATH__/src/
-ExecStart=__FINALPATH__/venv/bin/python3 manage.py document_consumer
+WorkingDirectory=__INSTALL_DIR__/src/
+ExecStart=__INSTALL_DIR__/venv/bin/python3 manage.py document_consumer
 StandardOutput=append:/var/log/__APP__/__APP__-consumer.log
 StandardError=inherit
 

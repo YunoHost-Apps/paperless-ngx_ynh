@@ -1,0 +1,86 @@
+packaging_format = 2
+
+id = "paperless-ngx"
+name = "Paperless-ngx"
+description.en = "Scan, index and archive all your physical documents"
+description.fr = "Scannez, triez et archivez tous vos documents papiers"
+
+version = "1.14.5~ynh2"
+
+maintainers = ["Tagada"]
+
+[upstream]
+license = "GPL-3.0-or-later"
+website = "https://paperless-ngx.com"
+demo = "https://demo.paperless-ngx.com/"
+admindoc = "https://paperless-ngx.readthedocs.io/en/latest/index.html"
+userdoc = "https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html"
+code = "https://github.com/paperless-ngx/paperless-ngx"
+cpe = "???" # XXX: No CPE yet... check https://nvd.nist.gov/products/cpe/search/results?namingFormat=2.3&keyword=paperless
+
+[integration]
+yunohost = ">= 11.0.0"
+architectures = "all"
+multi_instance = true
+ldap = false
+sso = false
+disk = "50M"
+ram.build = "350M"
+ram.runtime = "350M"
+
+[install]
+    [install.domain]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "domain"
+    full_domain = true
+
+    [install.admin]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "user"
+
+    [install.admin_pw]
+    ask.en = "Please chose a password for admin user."
+    type = "password"
+
+    [install.init_main_permission]
+    type = "group"
+    default = "all_users"
+
+    [install.init_api_permission]
+    ask.en = "Paperless-ngx API access list"
+    type = "group"
+    default = "visitors"
+
+[resources]
+    [resources.sources]
+
+        [resources.sources.main]
+        url = "https://github.com/paperless-ngx/paperless-ngx/releases/download/v1.14.5/paperless-ngx-v1.14.5.tar.xz"
+        sha256 = "355a5760cbc967c2bd6dcaf89f577aefd5acedd908361377976e04e17c95a8f9"
+
+        autoupdate.strategy = "latest_github_release"
+        autoupdate.asset = "paperless-ngx-*.tar.xz"
+
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.data_dir]
+    subdirs = ["consume", "data", "media"]
+
+    [resources.permissions]
+    main.url = "/"
+    main.auth_header = false
+
+    api.url = "/api/"
+    api.show_tile = false
+    api.auth_header = false
+    
+    [resources.ports]
+    main.default = 8095
+
+    [resources.apt]
+    packages = "python3, python3-pip, python3-dev, python3-venv, default-libmysqlclient-dev, fonts-liberation, imagemagick, gnupg, libpq-dev, libmagic-dev, mime-support, libzbar0, poppler-utils, postgresql, postgresql-contrib, unpaper, ghostscript, icc-profiles-free, qpdf, liblept5, libxml2, pngquant, zlib1g, tesseract-ocr, libatlas-base-dev, libxslt1-dev, redis-server"
+
+    [resources.database]
+    type = "postgresql"
