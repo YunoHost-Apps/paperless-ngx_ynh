@@ -59,7 +59,7 @@ ram.runtime = "350M"
         sha256 = "355a5760cbc967c2bd6dcaf89f577aefd5acedd908361377976e04e17c95a8f9"
 
         autoupdate.strategy = "latest_github_release"
-        autoupdate.asset = "paperless-ngx-*.tar.xz"
+        autoupdate.asset = "paperless-ngx-.*.tar.xz"
 
     [resources.system_user]
 
