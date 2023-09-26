@@ -5,7 +5,7 @@ name = "Paperless-ngx"
 description.en = "Scan, index and archive all your physical documents"
 description.fr = "Scannez, triez et archivez tous vos documents papiers"
 
-version = "1.17.4~ynh2"
+version = "1.17.4~ynh1"
 
 maintainers = ["Tagada"]
 
