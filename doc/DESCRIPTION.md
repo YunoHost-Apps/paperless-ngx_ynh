@@ -12,4 +12,4 @@ Paperless-ngx is a document management system that transforms your physical docu
 * Machine learning powered document matching.
 * Optimized for multi core systems: Paperless-ngx consumes multiple documents in parallel.
 * The integrated sanity checker makes sure that your document archive is in good health.
-* [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
+* [More screenshots are available in the documentation](https://docs.paperless-ngx.com/#screenshots).
