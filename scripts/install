@@ -17,6 +17,8 @@ ynh_script_progression --message="Setting up source files..." --weight=1
 
 ynh_setup_source --dest_dir="$install_dir"
 
+ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs"
+
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
@@ -54,6 +56,20 @@ pushd $install_dir
 	deactivate
 )
 popd
+
+#=================================================
+# BUILD GHOSTCRIPT SPECIFIC VERSION
+#=================================================
+ynh_script_progression --message="Building Ghostscript dependency..."
+
+pushd $install_dir/ghostscript
+    ./configure
+    make
+    make install
+popd
+
+chown -R $app:$app "$install_dir/ghostscript"
+chmod 755 $install_dir/ghostscript/bin/gs
 
 #=================================================
 # CREATE DATA DIRECTORY

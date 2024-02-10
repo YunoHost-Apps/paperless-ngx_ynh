@@ -61,6 +61,10 @@ ram.runtime = "350M"
         autoupdate.strategy = "latest_github_release"
         autoupdate.asset = "paperless-ngx-.*.tar.xz"
 
+        [resources.sources.gs]
+        url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10021/ghostpdl-10.02.1.tar.gz"
+        sha256 = "25399af0ef5bb94f2a13c91dc785c128d14f16744c4c92fa7c86e011c23151d8"
+
     [resources.system_user]
 
     [resources.install_dir]
