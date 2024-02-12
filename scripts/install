@@ -63,13 +63,13 @@ popd
 ynh_script_progression --message="Building Ghostscript dependency..."
 
 pushd $install_dir/ghostscript
-    ./configure
-    make
-    make install
+    ynh_exec_warn_less ./configure
+    ynh_exec_warn_less make
+    ynh_exec_warn_less make install
 popd
 
 chown -R $app:$app "$install_dir/ghostscript"
-chmod 755 $install_dir/ghostscript/bin/gs
+chmod 550 $install_dir/ghostscript/bin/gs
 
 #=================================================
 # CREATE DATA DIRECTORY

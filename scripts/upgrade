@@ -98,20 +98,20 @@ popd
 #=================================================
 # BUILD GHOSTCRIPT SPECIFIC VERSION
 #=================================================
-if [ ! -f $install_dir/ghostscript/bin/gs ] && [ grep -q "10.02.1" $($install_dir/ghostscript/bin/gs -v) ]
+if [[ ! -f $install_dir/ghostscript/bin/gs ]] && grep -q "10.02.1" $($install_dir/ghostscript/bin/gs -v)
 then
     ynh_script_progression --message="Building Ghostscript dependency..."
 
     ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs" --full_replace
 
     pushd $install_dir/ghostscript
-        ./configure
-        make
-        make install
+        ynh_exec_warn_less ./configure
+        ynh_exec_warn_less make
+        ynh_exec_warn_less make install
     popd
 
     chown -R $app:$app "$install_dir/ghostscript"
-    chmod 755 $install_dir/ghostscript/bin/gs
+    chmod 550 $install_dir/ghostscript/bin/gs
 fi
 
 #=================================================
