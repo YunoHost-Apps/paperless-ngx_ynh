@@ -71,7 +71,7 @@ popd
 chown -R $app:$app "$install_dir/ghostscript"
 chmod 550 $install_dir/ghostscript/bin/gs
 
-local_path=$install_dir/ghostscript/bin/gs:$PATH
+local_path=$install_dir/ghostscript/bin/:$PATH
 
 #=================================================
 # CREATE DATA DIRECTORY
