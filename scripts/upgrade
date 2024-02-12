@@ -114,6 +114,8 @@ then
     chmod 550 $install_dir/ghostscript/bin/gs
 fi
 
+local_path=$install_dir/ghostscript/bin/gs:$PATH
+
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
