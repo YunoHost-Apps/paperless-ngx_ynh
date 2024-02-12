@@ -60,7 +60,7 @@ popd
 #=================================================
 # BUILD GHOSTCRIPT SPECIFIC VERSION
 #=================================================
-ynh_script_progression --message="Building Ghostscript dependency..."
+ynh_script_progression --message="Building Ghostscript dependency... (this will take a long time!)"
 
 pushd $install_dir/ghostscript
     ynh_exec_warn_less ./configure

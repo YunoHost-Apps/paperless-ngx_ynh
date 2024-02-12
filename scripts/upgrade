@@ -100,7 +100,7 @@ popd
 #=================================================
 if [[ ! -f $install_dir/ghostscript/bin/gs ]] && grep -q "10.02.1" $($install_dir/ghostscript/bin/gs -v)
 then
-    ynh_script_progression --message="Building Ghostscript dependency..."
+    ynh_script_progression --message="Building Ghostscript dependency... (this will take a long time!)"
 
     ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs" --full_replace
 
