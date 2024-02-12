@@ -98,7 +98,7 @@ popd
 #=================================================
 # BUILD GHOSTCRIPT SPECIFIC VERSION
 #=================================================
-if ! dpkg --compare-versions "$($install_dir/ghostscript/bin/gs --version 2>/dev/null)" ge "10.02.1"
+if ! dpkg --compare-versions "$($install_dir/bin/gs --version 2>/dev/null)" ge "10.02.1"
 then
     ynh_script_progression --message="Building Ghostscript dependency... (this will take a long time!)"
 
@@ -108,13 +108,16 @@ then
         ynh_exec_warn_less ./configure
         ynh_exec_warn_less make
         ynh_exec_warn_less make install
+        mv bin/ $install_dir/
     popd
 
-    chown -R $app:$app "$install_dir/ghostscript"
-    chmod 550 $install_dir/ghostscript/bin/gs
+    ynh_secure_remove --file="$install_dir/ghostscript"
+    chmod -R o-rwx "$install_dir/bin"
+    chown -R $app:$app "$install_dir/bin"
+    chmod 550 $install_dir/bin/gs
 fi
 
-local_path=$install_dir/ghostscript/bin/:$PATH
+local_path=$install_dir/bin/:$PATH
 
 #=================================================
 # UPDATE A CONFIG FILE
