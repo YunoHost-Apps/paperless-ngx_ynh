@@ -98,7 +98,7 @@ popd
 #=================================================
 # BUILD GHOSTCRIPT SPECIFIC VERSION
 #=================================================
-if ! dpkg --compare-versions "$($install_dir/ghostscript/bin/gs --version &>/dev/null)" ge "10.02.1"
+if ! dpkg --compare-versions "$($install_dir/ghostscript/bin/gs --version 2>/dev/null)" ge "10.02.1"
 then
     ynh_script_progression --message="Building Ghostscript dependency... (this will take a long time!)"
 
