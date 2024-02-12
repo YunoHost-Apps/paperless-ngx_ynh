@@ -72,7 +72,7 @@ popd
 ynh_secure_remove --file="$install_dir/ghostscript"
 chmod -R o-rwx "$install_dir/bin"
 chown -R $app:$app "$install_dir/bin"
-chmod 550 $install_dir/gs
+chmod 550 $install_dir/bin/gs
 
 local_path=$install_dir/bin/:$PATH
 
