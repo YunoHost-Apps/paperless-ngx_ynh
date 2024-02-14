@@ -81,7 +81,7 @@ PAPERLESS_CONSUMER_IGNORE_PATTERNS=[".DS_STORE/*", "._*", ".stfolder/*", ".*"]
 # Binaries
 
 #PAPERLESS_CONVERT_BINARY=/usr/bin/convert
-PAPERLESS_GS_BINARY=__INSTALL_DIR__/ghostscript/bin/gs
+PAPERLESS_GS_BINARY=__INSTALL_DIR__/bin/gs
 #PAPERLESS_OPTIPNG_BINARY=/usr/bin/optipng
 
 # YunoHost tweaks
