@@ -107,7 +107,6 @@ then
     pushd $install_dir/ghostscript
         ynh_exec_warn_less ./configure
         ynh_exec_warn_less make
-        ynh_exec_warn_less make install
         mv bin/ $install_dir/
     popd
 
