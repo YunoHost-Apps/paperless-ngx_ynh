@@ -128,6 +128,12 @@ ynh_add_config --template="paperless.conf.example" --destination="$install_dir/p
 chmod 400 "$install_dir/paperless.conf"
 chown $app:$app "$install_dir/paperless.conf"
 
+# ImageMagick configuration
+mkdir -p "$install_dir/.config/ImageMagick"
+ynh_add_config --template="policy.xml" --destination="$install_dir/.config/ImageMagick/policy.xml"
+chmod 400 "$install_dir/.config/ImageMagick/policy.xml"
+chown -R $app:$app "$install_dir/.config"
+
 #=================================================
 # SETUP THE DATABASE
 #=================================================

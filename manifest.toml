@@ -70,7 +70,7 @@ ram.runtime = "350M"
     [resources.install_dir]
 
     [resources.data_dir]
-    subdirs = ["consume", "data", "media"]
+    subdirs = ["consume", "data", "media", "imagemagick"]
 
     [resources.permissions]
     main.url = "/"
