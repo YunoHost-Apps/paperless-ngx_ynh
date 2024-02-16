@@ -1,5 +1,7 @@
 [Unit]
 Description=Paperless scheduler
+After=network.target
+Wants=network.target
 Requires=redis.service
 
 [Service]
