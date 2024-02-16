@@ -5,7 +5,7 @@ name = "Paperless-ngx"
 description.en = "Scan, index and archive all your physical documents"
 description.fr = "Scannez, triez et archivez tous vos documents papiers"
 
-version = "2.5.0~ynh1"
+version = "2.5.3~ynh1"
 
 maintainers = ["Tagada"]
 
@@ -55,18 +55,22 @@ ram.runtime = "350M"
     [resources.sources]
 
         [resources.sources.main]
-        url = "https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.5.0/paperless-ngx-v2.5.0.tar.xz"
-        sha256 = "fa0b90cf9203d1aa89dbf687c43ea103cd616eb7725ae2c6cb6d2ead4d66de6a"
+        url = "https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.5.3/paperless-ngx-v2.5.3.tar.xz"
+        sha256 = "61b2c4a44663ac414994b0b0ce02938ec102c14c3f63d1e3259cb2f24ca9bda8"
 
         autoupdate.strategy = "latest_github_release"
         autoupdate.asset = "paperless-ngx-.*.tar.xz"
+
+        [resources.sources.gs]
+        url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10021/ghostpdl-10.02.1.tar.gz"
+        sha256 = "25399af0ef5bb94f2a13c91dc785c128d14f16744c4c92fa7c86e011c23151d8"
 
     [resources.system_user]
 
     [resources.install_dir]
 
     [resources.data_dir]
-    subdirs = ["consume", "data", "media"]
+    subdirs = ["consume", "data", "media", "imagemagick"]
 
     [resources.permissions]
     main.url = "/"

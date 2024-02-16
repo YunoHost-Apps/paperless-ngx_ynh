@@ -1,11 +1,14 @@
 [Unit]
 Description=Paperless consumer
+After=network.target
+Wants=network.target
 Requires=redis.service
 
 [Service]
 Type=simple
 User=__APP__
 Group=__APP__
+Environment=PATH=__LOCAL_PATH__
 WorkingDirectory=__INSTALL_DIR__/src/
 ExecStart=__INSTALL_DIR__/venv/bin/python3 manage.py document_consumer
 StandardOutput=append:/var/log/__APP__/__APP__-consumer.log

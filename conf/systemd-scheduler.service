@@ -1,11 +1,14 @@
 [Unit]
 Description=Paperless scheduler
+After=network.target
+Wants=network.target
 Requires=redis.service
 
 [Service]
 Type=simple
 User=__APP__
 Group=__APP__
+Environment=PATH=__LOCAL_PATH__
 WorkingDirectory=__INSTALL_DIR__/src/
 ExecStart=__INSTALL_DIR__/venv/bin/celery --app paperless beat --loglevel INFO
 StandardOutput=append:/var/log/__APP__/__APP__-scheduler.log
