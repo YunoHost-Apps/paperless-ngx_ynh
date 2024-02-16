@@ -17,6 +17,8 @@ ynh_script_progression --message="Setting up source files..." --weight=1
 
 ynh_setup_source --dest_dir="$install_dir"
 
+ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs"
+
 chmod 750 "$install_dir"
 chmod -R o-rwx "$install_dir"
 chown -R $app:$app "$install_dir"
@@ -56,6 +58,24 @@ pushd $install_dir
 popd
 
 #=================================================
+# BUILD GHOSTCRIPT SPECIFIC VERSION
+#=================================================
+ynh_script_progression --message="Building Ghostscript dependency... (this will take a long time!)"
+
+pushd $install_dir/ghostscript
+    ynh_exec_warn_less ./configure
+    ynh_exec_warn_less make
+    mv bin/ $install_dir/
+popd
+
+ynh_secure_remove --file="$install_dir/ghostscript"
+chmod -R o-rwx "$install_dir/bin"
+chown -R $app:$app "$install_dir/bin"
+chmod 550 $install_dir/bin/gs
+
+local_path=$install_dir/bin/:$PATH
+
+#=================================================
 # CREATE DATA DIRECTORY
 #=================================================
 ynh_script_progression --message="Setting permissions for the data directory..." --weight=1
@@ -82,6 +102,12 @@ ynh_add_config --template="paperless.conf.example" --destination="$install_dir/p
 
 chmod 400 "$install_dir/paperless.conf"
 chown $app:$app "$install_dir/paperless.conf"
+
+# ImageMagick configuration
+mkdir -p "$install_dir/.config/ImageMagick"
+ynh_add_config --template="policy.xml" --destination="$install_dir/.config/ImageMagick/policy.xml"
+chmod 400 "$install_dir/.config/ImageMagick/policy.xml"
+chown -R $app:$app "$install_dir/.config"
 
 #=================================================
 # SETUP THE DATABASE
