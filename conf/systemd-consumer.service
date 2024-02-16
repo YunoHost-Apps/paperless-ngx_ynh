@@ -1,5 +1,7 @@
 [Unit]
 Description=Paperless consumer
+After=network.target
+Wants=network.target
 Requires=redis.service
 
 [Service]

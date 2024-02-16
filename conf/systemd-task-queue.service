@@ -1,5 +1,7 @@
 [Unit]
 Description=Paperless task-queue
+After=network.target
+Wants=network.target
 Requires=redis.service
 
 [Service]
