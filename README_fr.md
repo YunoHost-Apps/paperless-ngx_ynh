@@ -33,7 +33,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
 
-**Version incluse :** 2.5.4~ynh1
+**Version incluse :** 2.6.1~ynh1
 
 **Démo :** https://demo.paperless-ngx.com/
 
@@ -43,12 +43,12 @@ Paperless-ngx is a document management system that transforms your physical docu
 
 ## Documentations et ressources
 
-* Site officiel de l’app : <https://paperless-ngx.com>
-* Documentation officielle utilisateur : <https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html>
-* Documentation officielle de l’admin : <https://paperless-ngx.readthedocs.io/en/latest/index.html>
-* Dépôt de code officiel de l’app : <https://github.com/paperless-ngx/paperless-ngx>
-* YunoHost Store: <https://apps.yunohost.org/app/paperless-ngx>
-* Signaler un bug : <https://github.com/YunoHost-Apps/paperless-ngx_ynh/issues>
+- Site officiel de l’app : <https://paperless-ngx.com>
+- Documentation officielle utilisateur : <https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html>
+- Documentation officielle de l’admin : <https://paperless-ngx.readthedocs.io/en/latest/index.html>
+- Dépôt de code officiel de l’app : <https://github.com/paperless-ngx/paperless-ngx>
+- YunoHost Store : <https://apps.yunohost.org/app/paperless-ngx>
+- Signaler un bug : <https://github.com/YunoHost-Apps/paperless-ngx_ynh/issues>
 
 ## Informations pour les développeurs
 
