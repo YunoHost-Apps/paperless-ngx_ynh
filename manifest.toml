@@ -79,6 +79,12 @@ ram.runtime = "350M"
     api.url = "/api/"
     api.show_tile = false
     api.auth_header = false
+
+    share.url = "/share/"
+    share.show_tile = false
+    share.auth_header = false
+    share.protected = true
+    share.allowed = "visitors"
     
     [resources.ports]
     main.default = 8095
