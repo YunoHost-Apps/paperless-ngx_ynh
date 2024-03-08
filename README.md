@@ -32,10 +32,9 @@ Paperless-ngx is a document management system that transforms your physical docu
 * The integrated sanity checker makes sure that your document archive is in good health.
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
+**Shipped version:** 2.6.2~ynh1
 
-**Shipped version:** 2.6.1~ynh1
-
-**Demo:** https://demo.paperless-ngx.com/
+**Demo:** <https://demo.paperless-ngx.com/>
 
 ## Screenshots
 
