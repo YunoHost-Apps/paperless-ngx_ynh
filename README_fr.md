@@ -32,10 +32,9 @@ Paperless-ngx is a document management system that transforms your physical docu
 * The integrated sanity checker makes sure that your document archive is in good health.
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
+**Version incluse :** 2.6.3~ynh1
 
-**Version incluse :** 2.6.1~ynh1
-
-**Démo :** https://demo.paperless-ngx.com/
+**Démo :** <https://demo.paperless-ngx.com/>
 
 ## Captures d’écran
 
@@ -56,7 +55,7 @@ Merci de faire vos pull request sur la [branche testing](https://github.com/Yuno
 
 Pour essayer la branche testing, procédez comme suit.
 
-``` bash
+```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/testing --debug
 ou
 sudo yunohost app upgrade paperless-ngx -u https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/testing --debug
