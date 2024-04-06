@@ -9,7 +9,7 @@ It shall NOT be edited by hand.
 
 [![Install Paperless-ngx with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 
-*[Read this README is other languages.](./ALL_README.md)*
+*[Read this README in other languages.](./ALL_README.md)*
 
 > *This package allows you to install Paperless-ngx quickly and simply on a YunoHost server.*  
 > *If you don't have YunoHost, please consult [the guide](https://yunohost.org/install) to learn how to install it.*
@@ -33,7 +33,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
 
-**Shipped version:** 2.6.3~ynh1
+**Shipped version:** 2.7.0~ynh1
 
 **Demo:** <https://demo.paperless-ngx.com/>
 
