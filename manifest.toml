@@ -19,7 +19,7 @@ code = "https://github.com/paperless-ngx/paperless-ngx"
 cpe = "???" # XXX: No CPE yet... check https://nvd.nist.gov/products/cpe/search/results?namingFormat=2.3&keyword=paperless
 
 [integration]
-yunohost = ">= 11.0.0"
+yunohost = ">= 11.2.12"
 architectures = "all"
 multi_instance = true
 ldap = false
@@ -84,7 +84,7 @@ ram.runtime = "350M"
     share.auth_header = false
     share.protected = true
     share.allowed = "visitors"
-    
+
     [resources.ports]
     main.default = 8095
 
