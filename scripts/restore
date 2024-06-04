@@ -8,7 +8,6 @@
 
 # Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
 source ../settings/scripts/_common.sh
-source ../settings/scripts/ynh_redis
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -18,10 +17,6 @@ ynh_script_progression --message="Loading additionnal settings..." --weight=1
 
 redis_db=$(ynh_redis_get_free_db)
 ynh_app_setting_set --app=$app --key=redis_db --value=$redis_db
-
-#=================================================
-# STANDARD RESTORATION STEPS
-#=================================================
 
 #=================================================
 # RESTORE THE APP MAIN DIR
