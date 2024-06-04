@@ -16,10 +16,9 @@ demo = "https://demo.paperless-ngx.com/"
 admindoc = "https://paperless-ngx.readthedocs.io/en/latest/index.html"
 userdoc = "https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html"
 code = "https://github.com/paperless-ngx/paperless-ngx"
-cpe = "???" # XXX: No CPE yet... check https://nvd.nist.gov/products/cpe/search/results?namingFormat=2.3&keyword=paperless
 
 [integration]
-yunohost = ">= 11.0.0"
+yunohost = ">= 11.2"
 architectures = "all"
 multi_instance = true
 ldap = false
@@ -30,11 +29,9 @@ ram.runtime = "350M"
 
 [install]
     [install.domain]
-    # this is a generic question - ask strings are automatically handled by Yunohost's core
     type = "domain"
 
     [install.admin]
-    # this is a generic question - ask strings are automatically handled by Yunohost's core
     type = "user"
 
     [install.admin_pw]
