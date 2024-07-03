@@ -20,8 +20,9 @@ Examples:\n- eng\n- eng+fra\n- eng+fra+chi_sim"""
 
   		[main.ocr.ocr_invalidate_digital_signatures]
 		ask = "Do you want signed PDF files to be consumed?"
-		type = "boolean"
-		default = "0"
+		type = "select"
+		choices.no = "{}"
+  		choices.yes = "{\"invalidate_digital_signatures\": true}"
 		help = """\
 Read this information: https://github.com/paperless-ngx/paperless-ngx/discussions/4047\n\
 """
