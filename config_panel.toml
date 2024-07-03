@@ -20,10 +20,9 @@ Examples:\n- eng\n- eng+fra\n- eng+fra+chi_sim"""
 
   		[main.ocr.ocr_invalidate_digital_signatures]
 		ask = "Do you want signed PDF files to be consumed?"
-		type = "select"
-		choices.no = "{}"
-  		choices.yes = "{\"invalidate_digital_signatures\": true}"
+		type = "string"
+		default = "{}"
 		help = """\
-Read this information: https://github.com/paperless-ngx/paperless-ngx/discussions/4047\n\
+Write {"invalidate_digital_signatures": true} to the field if you want signed PDF files to be consumed. Read this information: https://github.com/paperless-ngx/paperless-ngx/discussions/4047\n\
 """
 		bind = "PAPERLESS_OCR_USER_ARGS:__INSTALL_DIR__/paperless.conf"
