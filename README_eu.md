@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # Paperless-ngx YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://dash.yunohost.org/appci/app/paperless-ngx) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
 
 [![Instalatu Paperless-ngx YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 
@@ -33,7 +33,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
 
-**Paketatutako bertsioa:** 2.10.2~ynh1
+**Paketatutako bertsioa:** 2.11.0~ynh1
 
 **Demoa:** <https://demo.paperless-ngx.com/>
 
