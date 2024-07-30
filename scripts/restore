@@ -55,19 +55,6 @@ chmod 400 "$install_dir/paperless.conf"
 chown $app:$app "$install_dir/paperless.conf"
 
 #=================================================
-# RESTORE FAIL2BAN CONFIGURATION
-#=================================================
-#ynh_script_progression --message="Restoring the Fail2Ban configuration..." --weight=1
-
-#ynh_restore_file --origin_path="/etc/fail2ban/jail.d/$app.conf"
-#ynh_restore_file --origin_path="/etc/fail2ban/filter.d/$app.conf"
-#ynh_systemd_action --action=restart --service_name=fail2ban
-
-#=================================================
-# SPECIFIC RESTORATION
-#=================================================
-
-#=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
 ynh_script_progression --message="Installing Python dependencies..."
@@ -97,13 +84,6 @@ ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 ynh_script_progression --message="Restoring the PostgresSQL database..." --weight=1
 
 ynh_psql_connect_as --user=$db_user --password=$db_pwd --database=$db_name < ./db.sql
-
-#=================================================
-# RESTORE VARIOUS FILES
-#=================================================
-#ynh_script_progression --message="Restoring various files..." --weight=1
-
-#ynh_restore_file --origin_path="/etc/$app/"
 
 #=================================================
 # RESTORE SYSTEMD
