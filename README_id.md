@@ -33,7 +33,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
 
-**Versi terkirim:** 2.11.1~ynh1
+**Versi terkirim:** 2.11.2~ynh1
 
 **Demo:** <https://demo.paperless-ngx.com/>
 
@@ -46,7 +46,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 - Website aplikasi resmi: <https://paperless-ngx.com>
 - Dokumentasi pengguna resmi: <https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html>
 - Dokumentasi admin resmi: <https://paperless-ngx.readthedocs.io/en/latest/index.html>
-- Repositori kode aplikasi hulu: <https://github.com/paperless-ngx/paperless-ngx>
+- Depot kode aplikasi hulu: <https://github.com/paperless-ngx/paperless-ngx>
 - Gudang YunoHost: <https://apps.yunohost.org/app/paperless-ngx>
 - Laporkan bug: <https://github.com/YunoHost-Apps/paperless-ngx_ynh/issues>
 
