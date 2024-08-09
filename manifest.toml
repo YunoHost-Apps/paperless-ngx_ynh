@@ -5,7 +5,7 @@ name = "Paperless-ngx"
 description.en = "Scan, index and archive all your physical documents"
 description.fr = "Scannez, triez et archivez tous vos documents papiers"
 
-version = "2.11.2~ynh1"
+version = "2.11.3~ynh1"
 
 maintainers = ["Tagada"]
 
@@ -51,8 +51,8 @@ ram.runtime = "350M"
     [resources.sources]
 
         [resources.sources.main]
-        url = "https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.11.2/paperless-ngx-v2.11.2.tar.xz"
-        sha256 = "84ba3a474333953fc831e687649bc996e4e79ad24e663c973ac2ef4ae2d84927"
+        url = "https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.11.3/paperless-ngx-v2.11.3.tar.xz"
+        sha256 = "052077e595e94a844a6558365fd56205e5c4037afc23d799fdf0f6aa8a34c275"
 
         autoupdate.strategy = "latest_github_release"
         autoupdate.asset = "paperless-ngx-.*.tar.xz"
