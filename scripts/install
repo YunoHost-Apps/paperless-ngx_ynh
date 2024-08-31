@@ -1,56 +1,49 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --weight=1
+ynh_script_progression "Setting up source files..."
 
 ynh_setup_source --dest_dir="$install_dir"
 
 ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs"
 
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
-
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "$install_dir"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --weight=1
+ynh_script_progression "Configuring NGINX web server..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
 #=================================================
 # SPECIFIC SETUP
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing Python dependencies..."
+ynh_script_progression "Installing Python dependencies..."
 
 pushd $install_dir
 	python3 -m venv venv
-	chown -R "$app:" "$install_dir"
+	#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:" "$install_dir"
 (
 	source "$install_dir/venv/bin/activate"
-	ynh_exec_as $app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
-	ynh_exec_as $app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
+	ynh_exec_as_app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
+	ynh_exec_as_app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
 
 	# Installing NLTK data
 	mkdir -p "$install_dir/nltk_data"
 	chown -R "$app:" "$install_dir/nltk_data"
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" stopwords
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" stopwords
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt
 
 	deactivate
 )
@@ -59,15 +52,15 @@ popd
 #=================================================
 # BUILD GHOSTCRIPT SPECIFIC VERSION
 #=================================================
-ynh_script_progression --message="Building Ghostscript dependency... (this will take a long time!)"
+ynh_script_progression "Building Ghostscript dependency... (this will take a long time!)"
 
 pushd $install_dir/ghostscript
-    ynh_exec_warn_less ./configure
-    ynh_exec_warn_less make
+    ynh_hide_warnings ./configure
+    ynh_hide_warnings make
     mv bin/ $install_dir/
 popd
 
-ynh_secure_remove --file="$install_dir/ghostscript"
+ynh_safe_rm "$install_dir/ghostscript"
 chmod -R o-rwx "$install_dir/bin"
 chown -R $app:$app "$install_dir/bin"
 chmod 550 $install_dir/bin/gs
@@ -77,7 +70,7 @@ local_path=$install_dir/bin/:$PATH
 #=================================================
 # CREATE DATA DIRECTORY
 #=================================================
-ynh_script_progression --message="Setting permissions for the data directory..." --weight=1
+ynh_script_progression "Setting permissions for the data directory..."
 
 chmod 750 "$data_dir"
 chmod -R o-rwx "$data_dir"
@@ -86,37 +79,37 @@ chown -R $app:$app "$data_dir"
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..." --weight=1
+ynh_script_progression "Adding $app's configuration..."
 
 redis_db=$(ynh_redis_get_free_db)
-ynh_app_setting_set --app=$app --key=redis_db --value=$redis_db
+ynh_app_setting_set --key=redis_db --value=$redis_db
 
 paperless_secret_key=$(ynh_string_random)
-ynh_app_setting_set --app=$app --key=paperless_secret_key  --value=$paperless_secret_key
+ynh_app_setting_set --key=paperless_secret_key  --value=$paperless_secret_key
 
 ocr_language="eng"
-ynh_app_setting_set --app=$app --key=ocr_language  --value=$ocr_language
+ynh_app_setting_set --key=ocr_language  --value=$ocr_language
 
-ynh_add_config --template="paperless.conf.example" --destination="$install_dir/paperless.conf"
+ynh_config_add --template="paperless.conf.example" --destination="$install_dir/paperless.conf"
 
 chmod 400 "$install_dir/paperless.conf"
 chown $app:$app "$install_dir/paperless.conf"
 
 # ImageMagick configuration
 mkdir -p "$install_dir/.config/ImageMagick"
-ynh_add_config --template="policy.xml" --destination="$install_dir/.config/ImageMagick/policy.xml"
-chmod 400 "$install_dir/.config/ImageMagick/policy.xml"
+ynh_config_add --template="policy.xml" --destination="$install_dir/.config/ImageMagick/policy.xml"
+#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 400 "$install_dir/.config/ImageMagick/policy.xml"
 chown -R $app:$app "$install_dir/.config"
 
 #=================================================
 # SETUP THE DATABASE
 #=================================================
-ynh_script_progression --message="Setting up the database..." --weight=1
+ynh_script_progression "Setting up the database..."
 
 pushd "$install_dir/src"
 (
 	source "$install_dir/venv/bin/activate"
-	ynh_exec_as $app $install_dir/venv/bin/python manage.py migrate
+	ynh_exec_as_app $install_dir/venv/bin/python manage.py migrate
 	deactivate
 )
 popd
@@ -124,13 +117,13 @@ popd
 #=================================================
 # CREATE THE ADMIN USER
 #=================================================
-ynh_script_progression --message="Creating the admin user..." --weight=1
+ynh_script_progression "Creating the admin user..."
 
 pushd "$install_dir/src"
 (
 	source "$install_dir/venv/bin/activate"
 	email=$(ynh_user_get_info $admin 'mail')
-	ynh_exec_as $app env "DJANGO_SUPERUSER_PASSWORD=$admin_pw" $install_dir/venv/bin/python3 manage.py createsuperuser --noinput --username "$admin" --email "$email"
+	ynh_exec_as_app "DJANGO_SUPERUSER_PASSWORD=$admin_pw" $install_dir/venv/bin/python3 manage.py createsuperuser --noinput --username "$admin" --email "$email"
 	deactivate
 )
 popd
@@ -138,28 +131,27 @@ popd
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Configuring a systemd service..." --weight=1
+ynh_script_progression "Configuring $app's systemd service..."
 
 # Create a dedicated systemd config
-ynh_add_systemd_config --service="$app" --template="systemd.service"
-ynh_add_systemd_config --service="$app-consumer" --template="systemd-consumer.service"
-ynh_add_systemd_config --service="$app-scheduler" --template="systemd-scheduler.service"
-ynh_add_systemd_config --service="$app-task-queue" --template="systemd-task-queue.service"
+ynh_config_add_systemd
 
-#=================================================
-# GENERIC FINALIZATION
+ynh_config_add_systemd --service="$app-consumer" --template="systemd-consumer.service"
+ynh_config_add_systemd --service="$app-scheduler" --template="systemd-scheduler.service"
+ynh_config_add_systemd --service="$app-task-queue" --template="systemd-task-queue.service"
+
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Configuring log rotation..." --weight=1
+ynh_script_progression "Configuring log rotation..."
 
 # Use logrotate to manage application logfile(s)
-ynh_use_logrotate
+ynh_config_add_logrotate
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
+ynh_script_progression "Integrating service in YunoHost..."
 
 yunohost service add "$app" --log="/var/log/$app/$app.log"
 yunohost service add "$app-consumer" --log="/var/log/$app/$app-consumer.log"
@@ -169,15 +161,16 @@ yunohost service add "$app-task-queue" --log="/var/log/$app/$app-task-queue.log"
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=1
+ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/$app.log"
-ynh_systemd_action --service_name="$app-consumer" --action="start" --log_path="/var/log/$app/$app-consumer.log"
-ynh_systemd_action --service_name="$app-scheduler" --action="start" --log_path="/var/log/$app/$app-scheduler.log"
-ynh_systemd_action --service_name="$app-task-queue" --action="start" --log_path="/var/log/$app/$app-task-queue.log"
+ynh_systemctl --service="$app" --action="start"
+
+ynh_systemctl --service="$app-consumer" --action="start" --log_path="/var/log/$app/$app-consumer.log"
+ynh_systemctl --service="$app-scheduler" --action="start" --log_path="/var/log/$app/$app-scheduler.log"
+ynh_systemctl --service="$app-task-queue" --action="start" --log_path="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_script_progression "Installation of $app completed"
