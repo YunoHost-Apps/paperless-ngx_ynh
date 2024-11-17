@@ -20,11 +20,8 @@ ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs"
 #=================================================
 ynh_script_progression "Configuring NGINX web server..."
 
-# Create a dedicated NGINX config
 ynh_config_add_nginx
 
-#=================================================
-# SPECIFIC SETUP
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
