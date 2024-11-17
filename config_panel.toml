@@ -13,7 +13,16 @@ name = "Paperless-ngx configuration"
 		type = "string"
 		default = "eng"
 		help = """\
-Read this informations: https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/master/doc/PRE_INSTALL.md\n\
+Read this information: https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/master/doc/PRE_INSTALL.md\n\
 If your language contains a '-' such as chi-sim, you must use chi_sim\n\
 Examples:\n- eng\n- eng+fra\n- eng+fra+chi_sim"""
 		bind = "PAPERLESS_OCR_LANGUAGE:__INSTALL_DIR__/paperless.conf"
+
+  		[main.ocr.ocr_invalidate_digital_signatures]
+		ask = "Do you want signed PDF files to be consumed?"
+		type = "string"
+		default = "{}"
+		help = """\
+Write {"invalidate_digital_signatures": true} to the field if you want signed PDF files to be consumed. Read this information: https://github.com/paperless-ngx/paperless-ngx/discussions/4047\n\
+"""
+		bind = "PAPERLESS_OCR_USER_ARGS:__INSTALL_DIR__/paperless.conf"
