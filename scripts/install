@@ -50,7 +50,7 @@ pushd $install_dir
 	chown -R "$app:" "$install_dir/nltk_data"
 	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
 	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" stopwords
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt
+	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt_tab
 
 	deactivate
 )
@@ -175,16 +175,6 @@ ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$
 ynh_systemd_action --service_name="$app-consumer" --action="start" --log_path="/var/log/$app/$app-consumer.log"
 ynh_systemd_action --service_name="$app-scheduler" --action="start" --log_path="/var/log/$app/$app-scheduler.log"
 ynh_systemd_action --service_name="$app-task-queue" --action="start" --log_path="/var/log/$app/$app-task-queue.log"
-
-#=================================================
-# SETUP FAIL2BAN
-#=================================================
-#ynh_script_progression --message="Configuring Fail2Ban..." --weight=1
-
-# Create a dedicated Fail2Ban config
-#ynh_add_fail2ban_config --logpath="/var/log/nginx/${domain}-error.log" --failregex="Regex to match into the log for a failed login"
-# FIXME fail2ban
-# ynh_add_fail2ban_config --logpath="/var/log/nginx/${domain}-access.log" --failregex="<HOST>.* \"POST /api/v1/token/ HTTP/1.1\" 400 68.*$" --max_retry=5
 
 #=================================================
 # END OF SCRIPT

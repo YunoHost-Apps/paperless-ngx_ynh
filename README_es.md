@@ -5,7 +5,7 @@ No se debe editar a mano.
 
 # Paperless-ngx para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://dash.yunohost.org/appci/app/paperless-ngx) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
+[![Nivel de integración](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
 
 [![Instalar Paperless-ngx con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 
@@ -33,7 +33,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
 
-**Versión actual:** 2.10.2~ynh1
+**Versión actual:** 2.13.5~ynh1
 
 **Demo:** <https://demo.paperless-ngx.com/>
 
@@ -52,7 +52,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/paperless-ngx_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 

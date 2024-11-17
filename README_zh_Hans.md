@@ -5,7 +5,7 @@
 
 # YunoHost 上的 Paperless-ngx
 
-[![集成程度](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://dash.yunohost.org/appci/app/paperless-ngx) ![工作状态](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
 
 [![使用 YunoHost 安装 Paperless-ngx](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 
@@ -33,7 +33,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
 
-**分发版本：** 2.10.2~ynh1
+**分发版本：** 2.13.5~ynh1
 
 **演示：** <https://demo.paperless-ngx.com/>
 
