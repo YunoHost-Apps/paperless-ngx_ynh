@@ -47,7 +47,6 @@ ynh_setup_source --dest_dir="$install_dir" --keep="paperless.conf"
 #=================================================
 ynh_script_progression "Upgrading NGINX web server configuration..."
 
-# Create a dedicated NGINX config
 ynh_config_add_nginx
 
 #=================================================
