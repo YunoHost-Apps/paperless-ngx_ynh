@@ -18,7 +18,7 @@ userdoc = "https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html"
 code = "https://github.com/paperless-ngx/paperless-ngx"
 
 [integration]
-yunohost = ">= 11.2.12"
+yunohost = ">= 12.0.0"
 architectures = "all"
 multi_instance = true
 ldap = false
