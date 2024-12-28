@@ -38,7 +38,7 @@ ynh_add_nginx_config
 ynh_script_progression --message="Installing Python dependencies..."
 
 pushd $install_dir
-	python3 -m venv venv
+	python3 -m venv venv --system-site-packages
 	chown -R "$app:" "$install_dir"
 (
 	source "$install_dir/venv/bin/activate"
