@@ -5,7 +5,9 @@ Hij mag NIET handmatig aangepast worden.
 
 # Paperless-ngx voor Yunohost
 
-[![Integratieniveau](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/) ![Mate van functioneren](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Onderhoudsstatus](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
+[![Integratieniveau](https://apps.yunohost.org/badge/integration/paperless-ngx)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/)
+![Mate van functioneren](https://apps.yunohost.org/badge/state/paperless-ngx)
+![Onderhoudsstatus](https://apps.yunohost.org/badge/maintained/paperless-ngx)
 
 [![Paperless-ngx met Yunohost installeren](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 
