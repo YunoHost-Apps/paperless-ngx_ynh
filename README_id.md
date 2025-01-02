@@ -5,7 +5,9 @@ Ini TIDAK boleh diedit dengan tangan.
 
 # Paperless-ngx untuk YunoHost
 
-[![Tingkat integrasi](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/) ![Status kerja](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Status pemeliharaan](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
+[![Tingkat integrasi](https://apps.yunohost.org/badge/integration/paperless-ngx)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/)
+![Status kerja](https://apps.yunohost.org/badge/state/paperless-ngx)
+![Status pemeliharaan](https://apps.yunohost.org/badge/maintained/paperless-ngx)
 
 [![Pasang Paperless-ngx dengan YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 

@@ -5,7 +5,9 @@ No se debe editar a mano.
 
 # Paperless-ngx para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/paperless-ngx.svg)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/paperless-ngx.maintain.svg)
+[![Nivel de integración](https://apps.yunohost.org/badge/integration/paperless-ngx)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/)
+![Estado funcional](https://apps.yunohost.org/badge/state/paperless-ngx)
+![Estado En Mantención](https://apps.yunohost.org/badge/maintained/paperless-ngx)
 
 [![Instalar Paperless-ngx con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=paperless-ngx)
 
