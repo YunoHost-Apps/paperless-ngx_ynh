@@ -63,12 +63,8 @@ pushd $install_dir
 	ynh_secure_remove --file="$install_dir/venv"
 	python3 -m venv venv
 	chown -R "$app:" "$install_dir"
-(
-	source "$install_dir/venv/bin/activate"
 	ynh_exec_as $app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
 	ynh_exec_as $app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
-	deactivate
-)
 popd
 
 #=================================================

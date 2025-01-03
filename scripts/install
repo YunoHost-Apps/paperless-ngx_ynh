@@ -40,20 +40,15 @@ ynh_script_progression --message="Installing Python dependencies..."
 pushd $install_dir
 	python3 -m venv venv
 	chown -R "$app:" "$install_dir"
-(
-	source "$install_dir/venv/bin/activate"
-	ynh_exec_as $app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
-	ynh_exec_as $app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
+	ynh_exec_as "$app" "$install_dir/venv/bin/pip3" install --upgrade pip setuptools wheel
+	ynh_exec_as "$app" "$install_dir/venv/bin/pip3" install -r "$install_dir/requirements.txt"
 
 	# Installing NLTK data
 	mkdir -p "$install_dir/nltk_data"
 	chown -R "$app:" "$install_dir/nltk_data"
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" stopwords
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt_tab
-
-	deactivate
-)
+	ynh_exec_warn_less ynh_exec_as "$app" "$install_dir/venv/bin/python3" -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
+	ynh_exec_warn_less ynh_exec_as "$app" "$install_dir/venv/bin/python3" -m nltk.downloader -d "$install_dir/nltk_data" stopwords
+	ynh_exec_warn_less ynh_exec_as "$app" "$install_dir/venv/bin/python3" -m nltk.downloader -d "$install_dir/nltk_data" punkt_tab
 popd
 
 #=================================================
@@ -114,11 +109,7 @@ chown -R $app:$app "$install_dir/.config"
 ynh_script_progression --message="Setting up the database..." --weight=1
 
 pushd "$install_dir/src"
-(
-	source "$install_dir/venv/bin/activate"
-	ynh_exec_as $app $install_dir/venv/bin/python manage.py migrate
-	deactivate
-)
+ynh_exec_as $app $install_dir/venv/bin/python manage.py migrate
 popd
 
 #=================================================
@@ -127,12 +118,8 @@ popd
 ynh_script_progression --message="Creating the admin user..." --weight=1
 
 pushd "$install_dir/src"
-(
-	source "$install_dir/venv/bin/activate"
-	email=$(ynh_user_get_info $admin 'mail')
-	ynh_exec_as $app env "DJANGO_SUPERUSER_PASSWORD=$admin_pw" $install_dir/venv/bin/python3 manage.py createsuperuser --noinput --username "$admin" --email "$email"
-	deactivate
-)
+email=$(ynh_user_get_info $admin 'mail')
+ynh_exec_as $app env "DJANGO_SUPERUSER_PASSWORD=$admin_pw" "$install_dir/venv/bin/python3" manage.py createsuperuser --noinput --username "$admin" --email "$email"
 popd
 
 #=================================================
