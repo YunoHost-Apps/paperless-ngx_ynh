@@ -35,7 +35,7 @@ Paperless-ngx is a document management system that transforms your physical docu
 * [More screenshots are available in the documentation](https://paperless-ngx.readthedocs.io/en/latest/screenshots.html).
 
 
-**Versi terkirim:** 2.13.5~ynh3
+**Versi terkirim:** 2.14.0~ynh1
 
 **Demo:** <https://demo.paperless-ngx.com/>
 
