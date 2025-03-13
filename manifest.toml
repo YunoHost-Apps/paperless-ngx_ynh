@@ -5,7 +5,7 @@ name = "Paperless-ngx"
 description.en = "Scan, index and archive all your physical documents"
 description.fr = "Scannez, triez et archivez tous vos documents papiers"
 
-version = "2.14.7~ynh1"
+version = "2.14.7~ynh2"
 
 maintainers = ["Tagada"]
 
@@ -21,8 +21,11 @@ code = "https://github.com/paperless-ngx/paperless-ngx"
 yunohost = ">= 12.0.0"
 architectures = "all"
 multi_instance = true
+
 ldap = false
+
 sso = false
+
 disk = "50M"
 ram.build = "350M"
 ram.runtime = "350M"
@@ -30,13 +33,6 @@ ram.runtime = "350M"
 [install]
     [install.domain]
     type = "domain"
-
-    [install.admin]
-    type = "user"
-
-    [install.admin_pw]
-    ask.en = "Please chose a password for admin user."
-    type = "password"
 
     [install.init_main_permission]
     type = "group"
@@ -47,24 +43,31 @@ ram.runtime = "350M"
     type = "group"
     default = "visitors"
 
+    [install.admin]
+    type = "user"
+
+    [install.admin_pw]
+    ask.en = "Please chose a password for admin user."
+    type = "password"
+
 [resources]
     [resources.sources]
 
-        [resources.sources.main]
-        url = "https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.14.7/paperless-ngx-v2.14.7.tar.xz"
-        sha256 = "f1eb6087ce4ba4a26141a8dc97c54104142852e6b74509d414257e0f624b15b8"
+    [resources.sources.main]
+    url = "https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.14.7/paperless-ngx-v2.14.7.tar.xz"
+    sha256 = "f1eb6087ce4ba4a26141a8dc97c54104142852e6b74509d414257e0f624b15b8"
 
-        autoupdate.strategy = "latest_github_release"
-        autoupdate.asset = "paperless-ngx-.*.tar.xz"
+    autoupdate.strategy = "latest_github_release"
+    autoupdate.asset = "paperless-ngx-.*.tar.xz"
 
-        [resources.sources.gs]
-        url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10040/ghostpdl-10.04.0.tar.xz"
-        sha256 = "0603f5629bc6f567b454911d104cd96702489c9e70e577787843f480b23d4a77"
+    [resources.sources.gs]
+    url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10050/ghostpdl-10.05.0.tar.xz"
+    sha256 = "f154039345b6e9957b0750f872374d887d76321d52bbcc9d3b85487855e08f02"
 
-        autoupdate.upstream = "https://github.com/ArtifexSoftware/ghostpdl-downloads"
-        autoupdate.strategy = "latest_github_release"
-        autoupdate.version_regex = "^gs(9|1[0-9])([0-9]{2})([0-9])$"
-        autoupdate.asset = "ghostpdl-.*.tar.xz"
+    autoupdate.upstream = "https://github.com/ArtifexSoftware/ghostpdl-downloads"
+    autoupdate.strategy = "latest_github_release"
+    autoupdate.version_regex = "^gs(9|1[0-9])([0-9]{2})([0-9])$"
+    autoupdate.asset = "ghostpdl-.*.tar.xz"
 
     [resources.system_user]
 
