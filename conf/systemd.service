@@ -10,7 +10,19 @@ User=__APP__
 Group=__APP__
 Environment=PATH=__LOCAL_PATH__
 WorkingDirectory=__INSTALL_DIR__/src/
-ExecStart=__INSTALL_DIR__/venv/bin/uvicorn --port=__PORT__ --log-level=warning paperless.asgi:application
+Environment=GRANIAN_HOST=::
+Environment=GRANIAN_PORT=__PORT__
+Environment=GRANIAN_WORKERS=1
+ExecStart=/bin/sh -c '\
+  # Host: GRANIAN_HOST -> PAPERLESS_BIND_ADDR -> default \
+  [ -n "$PAPERLESS_BIND_ADDR" ] && export GRANIAN_HOST=$PAPERLESS_BIND_ADDR; \
+  # Port: GRANIAN_PORT -> PAPERLESS_PORT -> default \
+  [ -n "$PAPERLESS_PORT" ] && export GRANIAN_PORT=$PAPERLESS_PORT; \
+  # Workers: GRANIAN_WORKERS -> PAPERLESS_WEBSERVER_WORKERS -> default \
+  [ -n "$PAPERLESS_WEBSERVER_WORKERS" ] && export GRANIAN_WORKERS=$PAPERLESS_WEBSERVER_WORKERS; \
+  # URL path prefix: only set if PAPERLESS_FORCE_SCRIPT_NAME exists \
+  [ -n "$PAPERLESS_FORCE_SCRIPT_NAME" ] && export GRANIAN_URL_PATH_PREFIX=$PAPERLESS_FORCE_SCRIPT_NAME; \
+  exec __INSTALL_DIR__/venv/bin/granian --interface asginl --ws "paperless.asgi:application"'
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 
