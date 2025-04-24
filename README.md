@@ -4,7 +4,7 @@ It shall NOT be edited by hand.
 -->
 
 <h1>
-  <img src="https://raw.githubusercontent.com/YunoHost/apps/master/logos/paperless-ngx.png" width="32px" alt="Logo of Paperless-ngx">
+  <img src="https://raw.githubusercontent.com/YunoHost/apps/main/logos/paperless-ngx.png" width="32px" alt="Logo of Paperless-ngx">
   Paperless-ngx, packaged for YunoHost
 </h1>
 
@@ -12,7 +12,7 @@ Scan, index and archive all your physical documents
 
 [![🌐 Official app website](https://img.shields.io/badge/Official_app_website-darkgreen?style=for-the-badge)](https://paperless-ngx.com)
 [![App Demo](https://img.shields.io/badge/App_Demo-blue?style=for-the-badge)](https://demo.paperless-ngx.com/)
-![Version: 2.15.0~ynh1](https://img.shields.io/badge/Version-2.15.0~ynh1-rgba(0,150,0,1)?style=for-the-badge)
+[![Version: 2.15.3~ynh1](https://img.shields.io/badge/Version-2.15.3~ynh1-rgba(0,150,0,1)?style=for-the-badge)](https://ci-apps.yunohost.org/ci/apps/paperless-ngx/)
 
 <div align="center">
 <a href="https://apps.yunohost.org/app/paperless-ngx"><img height="100px" src="https://github.com/YunoHost/yunohost-artwork/raw/refs/heads/main/badges/neopossum-badges/badge_more_info_on_the_appstore.svg"/></a>
