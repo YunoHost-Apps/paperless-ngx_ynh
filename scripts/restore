@@ -18,9 +18,6 @@ ynh_script_progression "Restoring the app main directory..."
 
 ynh_restore "$install_dir"
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "$install_dir"
 #=================================================
 # RESTORE THE DATA DIRECTORY
 #=================================================
@@ -54,7 +51,6 @@ ynh_script_progression "Installing Python dependencies..."
 pushd $install_dir
 	ynh_safe_rm "$install_dir/venv"
 	python3 -m venv venv
-	#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:" "$install_dir"
 (
 	source "$install_dir/venv/bin/activate"
 	ynh_exec_as_app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
@@ -97,7 +93,6 @@ systemctl enable "$app-task-queue.service" --quiet
 ynh_script_progression "Restoring the logrotate configuration..."
 
 mkdir -p "/var/log/$app"
-#REMOVEME? Assuming ynh_config_add_logrotate is called, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app: "/var/log/$app"
 
 ynh_restore "/etc/logrotate.d/$app"
 

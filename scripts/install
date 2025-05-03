@@ -12,9 +12,6 @@ ynh_setup_source --dest_dir="$install_dir"
 
 ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs"
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "$install_dir"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -29,8 +26,8 @@ ynh_script_progression "Installing Python dependencies..."
 
 pushd $install_dir
 	python3 -m venv venv
-	#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:" "$install_dir"
 (
+
 	source "$install_dir/venv/bin/activate"
 	ynh_exec_as_app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
 	ynh_exec_as_app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
@@ -38,11 +35,10 @@ pushd $install_dir
 	# Installing NLTK data
 	mkdir -p "$install_dir/nltk_data"
 	chown -R "$app:" "$install_dir/nltk_data"
+
 	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
 	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" stopwords
-	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt
-
-	deactivate
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt_tab
 )
 popd
 
@@ -95,7 +91,6 @@ chown $app:$app "$install_dir/paperless.conf"
 # ImageMagick configuration
 mkdir -p "$install_dir/.config/ImageMagick"
 ynh_config_add --template="policy.xml" --destination="$install_dir/.config/ImageMagick/policy.xml"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 400 "$install_dir/.config/ImageMagick/policy.xml"
 chown -R $app:$app "$install_dir/.config"
 
 #=================================================
@@ -118,7 +113,6 @@ ynh_script_progression "Creating the admin user..."
 
 pushd "$install_dir/src"
 (
-	source "$install_dir/venv/bin/activate"
 	email=$(ynh_user_get_info $admin 'mail')
 	ynh_exec_as_app "DJANGO_SUPERUSER_PASSWORD=$admin_pw" $install_dir/venv/bin/python3 manage.py createsuperuser --noinput --username "$admin" --email "$email"
 	deactivate
