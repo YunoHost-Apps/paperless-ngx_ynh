@@ -4,7 +4,7 @@
 # COMMON VARIABLES
 #=================================================
 
-timezone=$(cat /etc/timezone)
+timezone=$(timedatectl show --value --property=Timezone)
 main_domain=$(cat /etc/yunohost/current_host)
 
 #=================================================
