@@ -39,9 +39,6 @@ ynh_script_progression "Upgrading source files..."
 
 ynh_setup_source --dest_dir="$install_dir" --keep="paperless.conf"
 
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod -R o-rwx "$install_dir"
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R $app:$app "$install_dir"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
@@ -73,6 +70,7 @@ popd
 #=================================================
 # BUILD GHOSTCRIPT SPECIFIC VERSION
 #=================================================
+
 if ! dpkg --compare-versions "$($install_dir/bin/gs --version 2>/dev/null)" ge "10.02.1"
 then
     ynh_script_progression "Building Ghostscript dependency... (this will take a long time!)"
@@ -106,7 +104,6 @@ chown $app:$app "$install_dir/paperless.conf"
 # ImageMagick configuration
 mkdir -p "$install_dir/.config/ImageMagick"
 ynh_config_add --template="policy.xml" --destination="$install_dir/.config/ImageMagick/policy.xml"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 400 "$install_dir/.config/ImageMagick/policy.xml"
 chown -R $app:$app "$install_dir/.config"
 
 #=================================================
