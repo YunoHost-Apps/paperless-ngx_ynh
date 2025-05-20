@@ -88,7 +88,6 @@ chown $app:$app "$install_dir/paperless.conf"
 # ImageMagick configuration
 mkdir -p "$install_dir/.config/ImageMagick"
 ynh_config_add --template="policy.xml" --destination="$install_dir/.config/ImageMagick/policy.xml"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 400 "$install_dir/.config/ImageMagick/policy.xml"
 chown -R $app:$app "$install_dir/.config"
 
 #=================================================
