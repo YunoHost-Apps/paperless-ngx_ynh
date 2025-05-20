@@ -18,9 +18,9 @@ fi
 # Remove the dedicated systemd config
 ynh_config_remove_systemd
 
-ynh_config_remove_systemd"$app-consumer"
-ynh_config_remove_systemd"$app-scheduler"
-ynh_config_remove_systemd"$app-task-queue"
+ynh_config_remove_systemd "$app-consumer"
+ynh_config_remove_systemd "$app-scheduler"
+ynh_config_remove_systemd "$app-task-queue"
 
 # Remove the app-specific logrotate config
 ynh_config_remove_logrotate
