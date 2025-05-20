@@ -32,8 +32,8 @@ pushd $install_dir
 	python3 -m venv venv
 	chown -R "$app:" "$install_dir"
 
-	ynh_exec_as_app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
-	ynh_exec_as_app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
 
 	# Installing NLTK data
 	mkdir -p "$install_dir/nltk_data"
