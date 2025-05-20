@@ -55,9 +55,9 @@ ynh_script_progression "Installing Python dependencies..."
 pushd $install_dir
 	ynh_safe_rm "$install_dir/venv"
 	python3 -m venv venv
-	#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:" "$install_dir"
-	ynh_exec_as_app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
-	ynh_exec_as_app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
+	chown -R "$app:" "$install_dir"
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
 popd
 
 #=================================================
