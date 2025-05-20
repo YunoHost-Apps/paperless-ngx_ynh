@@ -112,7 +112,7 @@ popd
 ynh_script_progression "Creating the admin user..."
 
 pushd "$install_dir/src"
-	email=$(ynh_user_get_info $admin 'mail')
+	email=$(ynh_user_get_info --username="$admin" --key=mail)
 	ynh_exec_as_app "DJANGO_SUPERUSER_PASSWORD=$admin_pw" $install_dir/venv/bin/python3 manage.py createsuperuser --noinput --username "$admin" --email "$email"
 popd
 
