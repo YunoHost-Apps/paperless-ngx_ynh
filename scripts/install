@@ -24,8 +24,6 @@ ynh_script_progression "Configuring NGINX web server..."
 ynh_config_add_nginx
 
 #=================================================
-# SPECIFIC SETUP
-#=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
 ynh_script_progression "Installing Python dependencies..."
@@ -115,10 +113,8 @@ popd
 ynh_script_progression "Creating the admin user..."
 
 pushd "$install_dir/src"
-(
 	email=$(ynh_user_get_info $admin 'mail')
 	ynh_exec_as_app "DJANGO_SUPERUSER_PASSWORD=$admin_pw" $install_dir/venv/bin/python3 manage.py createsuperuser --noinput --username "$admin" --email "$email"
-)
 popd
 
 #=================================================
