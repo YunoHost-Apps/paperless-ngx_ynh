@@ -1,103 +1,89 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# STANDARD UPGRADE STEPS
-#=================================================
 # STOP SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Stopping a systemd service..." --weight=1
+ynh_script_progression "Stopping $app's systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="stop" --log_path="/var/log/$app/$app.log"
-ynh_systemd_action --service_name="$app-consumer" --action="stop" --log_path="/var/log/$app/$app-consumer.log"
-ynh_systemd_action --service_name="$app-scheduler" --action="stop" --log_path="/var/log/$app/$app-scheduler.log"
-ynh_systemd_action --service_name="$app-task-queue" --action="stop" --log_path="/var/log/$app/$app-task-queue.log"
+ynh_systemctl --service="$app" --action="stop"
+
+ynh_systemctl --service="$app-consumer" --action="stop" --log_path="/var/log/$app/$app-consumer.log"
+ynh_systemctl --service="$app-scheduler" --action="stop" --log_path="/var/log/$app/$app-scheduler.log"
+ynh_systemctl --service="$app-task-queue" --action="stop" --log_path="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
+ynh_script_progression "Ensuring downward compatibility..."
 
 # If ocr_language doesn't exist, create it
 if [ -z "$ocr_language" ]; then
 	ocr_language="eng"
-	ynh_app_setting_set --app=$app --key=ocr_language --value=$ocr_language
+	ynh_app_setting_set --key=ocr_language --value=$ocr_language
 fi
 
 if ynh_compare_current_package_version -c le -v "1.14.5~ynh1"
 then
 	# When upgrading from older version when install_dir was in /var/www,
 	# we need to rebuild the venv entierly
-	ynh_secure_remove --file="$install_dir/venv"
+	ynh_safe_rm "$install_dir/venv"
 fi
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Upgrading source files..." --weight=1
+ynh_script_progression "Upgrading source files..."
 
 ynh_setup_source --dest_dir="$install_dir" --keep="paperless.conf"
-
-chmod 750 "$install_dir"
-chmod -R o-rwx "$install_dir"
-chown -R $app:$app "$install_dir"
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=1
+ynh_script_progression "Upgrading NGINX web server configuration..."
 
 # Create a dedicated NGINX config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
-#=================================================
-# SPECIFIC UPGRADE
 #=================================================
 # INSTALL PYTHON DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing Python dependencies..." --weight=5
+ynh_script_progression "Installing Python dependencies..."
 
 pushd $install_dir
 	python3 -m venv venv
 	chown -R "$app:" "$install_dir"
-(
-	ynh_exec_as $app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
-	ynh_exec_as $app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/pip3 install --upgrade pip setuptools wheel
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
 
 	# Installing NLTK data
-	ynh_secure_remove --file="$install_dir/nltk_data"
+	ynh_safe_rm "$install_dir/nltk_data"
 	mkdir -p "$install_dir/nltk_data"
 	chown -R "$app:" "$install_dir/nltk_data"
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" stopwords
-	ynh_exec_warn_less ynh_exec_as $app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt_tab
-)
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" stopwords
+	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" punkt_tab
 popd
 
 #=================================================
 # BUILD GHOSTCRIPT SPECIFIC VERSION
 #=================================================
+
 if ! dpkg --compare-versions "$($install_dir/bin/gs --version 2>/dev/null)" ge "10.02.1"
 then
-    ynh_script_progression --message="Building Ghostscript dependency... (this will take a long time!)"
+    ynh_script_progression "Building Ghostscript dependency... (this will take a long time!)"
 
     ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs" --full_replace
 
     pushd $install_dir/ghostscript
-        ynh_exec_warn_less ./configure
-        ynh_exec_warn_less make
+        ynh_hide_warnings ./configure
+        ynh_hide_warnings make
         mv bin/ $install_dir/
     popd
 
-    ynh_secure_remove --file="$install_dir/ghostscript"
+    ynh_safe_rm "$install_dir/ghostscript"
     chmod -R o-rwx "$install_dir/bin"
     chown -R $app:$app "$install_dir/bin"
     chmod 550 $install_dir/bin/gs
@@ -108,58 +94,54 @@ local_path=$install_dir/bin/:$PATH
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Updating a configuration file..." --weight=1
+ynh_script_progression "Updating configuration..."
 
-ynh_add_config --template="paperless.conf.example" --destination="$install_dir/paperless.conf"
+ynh_config_add --template="paperless.conf.example" --destination="$install_dir/paperless.conf"
 
 chmod 400 "$install_dir/paperless.conf"
 chown $app:$app "$install_dir/paperless.conf"
 
 # ImageMagick configuration
 mkdir -p "$install_dir/.config/ImageMagick"
-ynh_add_config --template="policy.xml" --destination="$install_dir/.config/ImageMagick/policy.xml"
-chmod 400 "$install_dir/.config/ImageMagick/policy.xml"
+ynh_config_add --template="policy.xml" --destination="$install_dir/.config/ImageMagick/policy.xml"
 chown -R $app:$app "$install_dir/.config"
 
 #=================================================
 # SETUP THE DATABASE
 #=================================================
-ynh_script_progression --message="Setting up the database..." --weight=1
+ynh_script_progression "Setting up the database..."
 
 pushd "$install_dir/src"
-(
-	ynh_exec_as $app $install_dir/venv/bin/python manage.py migrate
-)
+	ynh_exec_as_app $install_dir/venv/bin/python manage.py migrate
 popd
 
 #=================================================
 # SETUP SYSTEMD
 #=================================================
-ynh_script_progression --message="Upgrading systemd configuration..." --weight=1
+ynh_script_progression "Upgrading systemd configuration..."
 
 # Create a dedicated systemd config
-ynh_add_systemd_config --service="$app" --template="systemd.service"
-ynh_add_systemd_config --service="$app-consumer" --template="systemd-consumer.service"
-ynh_add_systemd_config --service="$app-scheduler" --template="systemd-scheduler.service"
-ynh_add_systemd_config --service="$app-task-queue" --template="systemd-task-queue.service"
+ynh_config_add_systemd
 
-#=================================================
-# GENERIC FINALIZATION
+ynh_config_add_systemd --service="$app-consumer" --template="systemd-consumer.service"
+ynh_config_add_systemd --service="$app-scheduler" --template="systemd-scheduler.service"
+ynh_config_add_systemd --service="$app-task-queue" --template="systemd-task-queue.service"
+
 #=================================================
 # SETUP LOGROTATE
 #=================================================
-ynh_script_progression --message="Upgrading logrotate configuration..." --weight=1
+ynh_script_progression "Upgrading logrotate configuration..."
 
 # Use logrotate to manage app-specific logfile(s)
-ynh_use_logrotate --logfile="/var/log/$app/$app.log"
-ynh_use_logrotate --logfile="/var/log/$app/$app-consumer.log"
-ynh_use_logrotate --logfile="/var/log/$app/$app-scheduler.log"
-ynh_use_logrotate --logfile="/var/log/$app/$app-task-queue.log"
+ynh_config_add_logrotate "/var/log/$app/$app.log"
+ynh_config_add_logrotate "/var/log/$app/$app-consumer.log"
+ynh_config_add_logrotate "/var/log/$app/$app-scheduler.log"
+ynh_config_add_logrotate "/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # INTEGRATE SERVICE IN YUNOHOST
 #=================================================
-ynh_script_progression --message="Integrating service in YunoHost..." --weight=1
+ynh_script_progression "Integrating service in YunoHost..."
 
 yunohost service add "$app" --log="/var/log/$app/$app.log"
 yunohost service add "$app-consumer" --log="/var/log/$app/$app-consumer.log"
@@ -169,15 +151,16 @@ yunohost service add "$app-task-queue" --log="/var/log/$app/$app-task-queue.log"
 #=================================================
 # START SYSTEMD SERVICE
 #=================================================
-ynh_script_progression --message="Starting a systemd service..." --weight=1
+ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemd_action --service_name="$app" --action="start" --log_path="/var/log/$app/$app.log"
-ynh_systemd_action --service_name="$app-consumer" --action="start" --log_path="/var/log/$app/$app-consumer.log"
-ynh_systemd_action --service_name="$app-scheduler" --action="start" --log_path="/var/log/$app/$app-scheduler.log"
-ynh_systemd_action --service_name="$app-task-queue" --action="start" --log_path="/var/log/$app/$app-task-queue.log"
+ynh_systemctl --service="$app" --action="start"
+
+ynh_systemctl --service="$app-consumer" --action="start" --log_path="/var/log/$app/$app-consumer.log"
+ynh_systemctl --service="$app-scheduler" --action="start" --log_path="/var/log/$app/$app-scheduler.log"
+ynh_systemctl --service="$app-task-queue" --action="start" --log_path="/var/log/$app/$app-task-queue.log"
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --last
+ynh_script_progression "Upgrade of $app completed"
