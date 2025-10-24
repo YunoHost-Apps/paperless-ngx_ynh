@@ -25,7 +25,7 @@ if [ -z "$ocr_language" ]; then
 	ynh_app_setting_set --key=ocr_language --value=$ocr_language
 fi
 
-if ynh_compare_current_package_version -c le -v "1.14.5~ynh1"
+if ynh_app_upgrading_from_version_before "1.14.5~ynh1"
 then
 	# When upgrading from older version when install_dir was in /var/www,
 	# we need to rebuild the venv entierly
