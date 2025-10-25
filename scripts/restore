@@ -20,6 +20,13 @@ ynh_script_progression "Restoring the app main directory..."
 ynh_restore "$install_dir"
 
 #=================================================
+# RESTORE THE APP TMP DIR
+#=================================================
+mkdir -p "/tmp/paperless-ngx/"
+chmod -R 775 "/tmp/paperless-ngx/"
+chown -R "$app:$app" "/tmp/paperless-ngx/"
+
+#=================================================
 # RESTORE THE DATA DIRECTORY
 #=================================================
 ynh_script_progression "Restoring the data directory..."
