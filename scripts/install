@@ -13,9 +13,9 @@ ynh_setup_source --dest_dir="$install_dir"
 ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs"
 
 # Create tmp required by Paperless-ngx
-mkdir -p "/tmp/paperless-ngx/"
-chmod -R 775 "/tmp/paperless-ngx/"
-chown -R "$app:$app" "/tmp/paperless-ngx/"
+mkdir -p "/tmp/$app/"
+chmod -R 775 "/tmp/$app/"
+chown -R "$app:$app" "/tmp/$app/"
 
 #=================================================
 # NGINX CONFIGURATION
