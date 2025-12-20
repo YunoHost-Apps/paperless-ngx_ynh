@@ -22,9 +22,9 @@ ynh_restore "$install_dir"
 #=================================================
 # RESTORE THE APP TMP DIR
 #=================================================
-mkdir -p "/tmp/paperless-ngx/"
-chmod -R 775 "/tmp/paperless-ngx/"
-chown -R "$app:$app" "/tmp/paperless-ngx/"
+mkdir -p "/tmp/$app/"
+chmod -R 775 "/tmp/$app/"
+chown -R "$app:$app" "/tmp/$app/"
 
 #=================================================
 # RESTORE THE DATA DIRECTORY
