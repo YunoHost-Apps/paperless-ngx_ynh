@@ -7,7 +7,7 @@ name = "Paperless-ngx"
 description.en = "Scan, index and archive all your physical documents"
 description.fr = "Scannez, triez et archivez tous vos documents papiers"
 
-version = "2.20.3~ynh1"
+version = "2.20.3~ynh2"
 
 maintainers = ["Tagada"]
 
@@ -20,7 +20,7 @@ userdoc = "https://paperless-ngx.readthedocs.io/en/latest/usage_overview.html"
 code = "https://github.com/paperless-ngx/paperless-ngx"
 
 [integration]
-yunohost = ">= 12.1.17"
+yunohost = ">= 12.1.38"
 helpers_version = "2.1"
 architectures = "all"
 multi_instance = true
@@ -72,6 +72,7 @@ ram.runtime = "350M"
     autoupdate.asset = "ghostpdl-.*.tar.xz"
 
     [resources.system_user]
+    allow_email = true
 
     [resources.install_dir]
 
