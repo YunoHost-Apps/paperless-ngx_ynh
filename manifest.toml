@@ -57,7 +57,7 @@ ram.runtime = "350M"
 
     [resources.sources.main]
     url = "https://github.com/paperless-ngx/paperless-ngx/releases/download/v2.20.5/paperless-ngx-v2.20.5.tar.xz"
-    sha256 = "29e645a244967d8b80f7b311a2d0b146c25b2bf856ac68d051f21659e56ad1aa"
+    sha256 = "730848759f510869448a159b8b9e9718460d51437eacc9db726d14affa11edcf"
 
     autoupdate.strategy = "latest_github_release"
     autoupdate.asset = "paperless-ngx-.*.tar.xz"
