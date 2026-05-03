@@ -102,8 +102,7 @@ ram.runtime = "350M"
     if [[ $YNH_DEBIAN_VERSION == "bookworm" ]]; then
         echo "mime-support, liblept5, libatlas-base-dev";
     elif [[ $YNH_DEBIAN_VERSION == "trixie" ]]; then
-        echo "media-types, mailcap, libleptonica6"
-        # FIXME : libatlas-base-dev doesn't exist in trixie anymore yet is needed for RPi ? It doesn't look like there's any obvious replacement...
+        echo "media-types, mailcap, libleptonica6, libopenblas-dev"
     fi
     """
 
