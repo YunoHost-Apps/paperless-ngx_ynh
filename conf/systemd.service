@@ -10,7 +10,7 @@ User=__APP__
 Group=__APP__
 Environment=PATH=__LOCAL_PATH__
 WorkingDirectory=__INSTALL_DIR__/src/
-Environment=GRANIAN_HOST=::
+Environment=GRANIAN_HOST=::1
 Environment=GRANIAN_PORT=__PORT__
 Environment=GRANIAN_WORKERS=1
 ExecStart=/bin/sh -c '\
@@ -30,7 +30,7 @@ StandardError=inherit
 # Details for these options: https://www.freedesktop.org/software/systemd/man/systemd.exec.html
 NoNewPrivileges=yes
 #PrivateTmp - Must be disabled for full functionality
-#PrivateTmp=yes
+PrivateTmp=no
 PrivateDevices=yes
 RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
 RestrictNamespaces=yes
