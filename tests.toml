@@ -14,7 +14,7 @@ test_format = 1.0
     # Default args to use for install
     # -------------------------------
 
-    args.admin_pw = "acab"
+    args.admin_pw = "SuperDuper4dminPassw0rd"
     args.init_main_permission = "all_users"
 
     # -------------------------------
