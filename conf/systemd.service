@@ -13,6 +13,7 @@ WorkingDirectory=__INSTALL_DIR__/src/
 Environment=GRANIAN_HOST=::1
 Environment=GRANIAN_PORT=__PORT__
 Environment=GRANIAN_WORKERS=1
+ExecStartPre=/usr/bin/install -d -m 1770 -o __APP__ -g __APP__ /tmp/__APP__
 ExecStart=/bin/sh -c '\
   # Host: GRANIAN_HOST -> PAPERLESS_BIND_ADDR -> default \
   [ -n "$PAPERLESS_BIND_ADDR" ] && export GRANIAN_HOST=$PAPERLESS_BIND_ADDR; \
