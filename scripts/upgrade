@@ -25,19 +25,12 @@ if [ -z "$ocr_language" ]; then
 	ynh_app_setting_set --key=ocr_language --value=$ocr_language
 fi
 
-if ynh_app_upgrading_from_version_before "1.14.5~ynh1"
-then
-	# When upgrading from older version when install_dir was in /var/www,
-	# we need to rebuild the venv entierly
-	ynh_safe_rm "$install_dir/venv"
-fi
-
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression "Upgrading source files..."
 
-ynh_setup_source --dest_dir="$install_dir" --full_replace
+ynh_setup_source --dest_dir="$install_dir" --full_replace --keep="paperless.conf"
 
 # Create tmp required by Paperless-ngx
 mkdir -p "/tmp/$app/"
@@ -64,7 +57,6 @@ pushd $install_dir
 	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/pip3 install -r "$install_dir/requirements.txt"
 
 	# Installing NLTK data
-	ynh_safe_rm "$install_dir/nltk_data"
 	mkdir -p "$install_dir/nltk_data"
 	chown -R "$app:" "$install_dir/nltk_data"
 	ynh_hide_warnings ynh_exec_as_app $install_dir/venv/bin/python3 -m nltk.downloader -d "$install_dir/nltk_data" snowball_data
@@ -80,7 +72,7 @@ if ! dpkg --compare-versions "$($install_dir/bin/gs --version 2>/dev/null)" ge "
 then
     ynh_script_progression "Building Ghostscript dependency... (this will take a long time!)"
 
-    ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs" --full_replace
+    ynh_setup_source --dest_dir="$install_dir/ghostscript" --source_id="gs"
 
     pushd $install_dir/ghostscript
         ynh_hide_warnings ./configure
@@ -102,9 +94,6 @@ local_path=$install_dir/bin/:$PATH
 ynh_script_progression "Updating configuration..."
 
 ynh_config_add --template="paperless.conf.example" --destination="$install_dir/paperless.conf"
-
-chmod 400 "$install_dir/paperless.conf"
-chown $app:$app "$install_dir/paperless.conf"
 
 # ImageMagick configuration
 mkdir -p "$install_dir/.config/ImageMagick"

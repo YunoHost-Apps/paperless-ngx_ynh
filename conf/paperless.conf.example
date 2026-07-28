@@ -104,3 +104,4 @@ PAPERLESS_EMAIL_USE_SSL=false
 # YunoHost tweaks
 
 PAPERLESS_LOGOUT_REDIRECT_URL=https://__MAIN_DOMAIN__/yunohost/sso/?action=logout
+PAPERLESS_NLTK_DIR=__INSTALL_DIR__/nltk_data
