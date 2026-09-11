@@ -7,7 +7,7 @@ name = "Paperless-ngx"
 description.en = "Scan, index and archive all your physical documents"
 description.fr = "Scannez, triez et archivez tous vos documents papiers"
 
-version = "3.1.3~ynh1"
+version = "3.1.3~ynh2"
 
 maintainers = ["Tagada"]
 
@@ -63,8 +63,8 @@ ram.runtime = "350M"
     autoupdate.asset = "paperless-ngx-.*.tar.xz"
 
     [resources.sources.gs]
-    url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10071/ghostpdl-10.07.1.tar.xz"
-    sha256 = "56f6a82907c3a73bba95de1319e029adf16477e34df2dea180d390e71e7c4053"
+    url = "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10080/ghostpdl-10.08.0.tar.xz"
+    sha256 = "94943e3c4adb7115d132b3c28b913672f2e62e6a9d802f7e754e716b1634174a"
 
     autoupdate.upstream = "https://github.com/ArtifexSoftware/ghostpdl-downloads"
     autoupdate.strategy = "latest_github_release"
