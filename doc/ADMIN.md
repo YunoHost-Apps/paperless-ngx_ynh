@@ -1,10 +1,4 @@
 Paperless is performing OCR on documents and images. English is installed by default. More languages can be installed:
-  * Display a list of all Tesseract language packs `apt-cache search tesseract-ocr`
-  * Install additional language packs
-    * Example for french `sudo apt-get install tesseract-ocr-fra`
-    * Example for german `sudo apt-get install tesseract-ocr-deu`
-  * Modify config to add new languages
-    * Open the configuration
-    * You can combine multiple languages like this:
-      * One language: eng
-      * Two languages: eng+fra
+  * Check out [Tesseract OCR's documentation](https://tesseract-ocr.github.io/tessdoc/Data-Files-in-different-versions.html) to find the codes of the languages you want to add.
+    * You can also display a list of all Tesseract language packs with `apt-cache search tesseract-ocr`
+  * The app's configuration panel on this page will automatically add the corresponding `apt` dependencies
