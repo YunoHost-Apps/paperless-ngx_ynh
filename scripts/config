@@ -1,0 +1,22 @@
+#!/bin/bash
+
+source /usr/share/yunohost/helpers
+
+ynh_app_config_apply() {
+    _ynh_app_config_apply
+
+    if [ "${changed[ocr_language]}" == "true" ]
+    then
+
+        IFS='+' read -ra parts <<< "$ocr_language"
+
+        for lang in "${parts[@]}"; do
+            package="tesseract-ocr-$lang"
+            if ! dpkg-query -s "$package" >/dev/null 2>&1; then
+                ynh_apt_install_dependencies $package
+            fi
+        done
+    fi
+}
+
+ynh_app_config_run $1
