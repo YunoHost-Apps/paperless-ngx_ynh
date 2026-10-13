@@ -24,6 +24,8 @@ ExecStart=/bin/sh -c '\
   # URL path prefix: only set if PAPERLESS_FORCE_SCRIPT_NAME exists \
   [ -n "$PAPERLESS_FORCE_SCRIPT_NAME" ] && export GRANIAN_URL_PATH_PREFIX=$PAPERLESS_FORCE_SCRIPT_NAME; \
   exec __INSTALL_DIR__/venv/bin/granian --interface asginl --ws "paperless.asgi:application"'
+Restart=always
+RestartSec=5
 StandardOutput=append:/var/log/__APP__/__APP__.log
 StandardError=inherit
 
