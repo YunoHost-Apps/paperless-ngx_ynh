@@ -11,6 +11,8 @@ Group=__APP__
 Environment=PATH=__LOCAL_PATH__
 WorkingDirectory=__INSTALL_DIR__/src/
 ExecStart=__INSTALL_DIR__/venv/bin/celery --app paperless beat --loglevel INFO
+Restart=always
+RestartSec=5
 StandardOutput=append:/var/log/__APP__/__APP__-scheduler.log
 StandardError=inherit
 
